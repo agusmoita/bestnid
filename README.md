@@ -1,2 +1,5 @@
-# bestnid
-Sistema Bestnid para Ing de Software 2
+# Grupo 25
+Integrantes:
+  Castro, Luciano
+  Moita, Augusto
+  Morchio, Ignacio Agustín
