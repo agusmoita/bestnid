@@ -1,5 +1,5 @@
 # Grupo 25
 Integrantes:
-  Castro, Luciano
-  Moita, Augusto
-  Morchio, Ignacio Agustín
+Luciano Castro,
+Augusto Moita,
+Ignacio Agustín Morchio.
