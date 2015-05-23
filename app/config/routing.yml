@@ -1,3 +1,8 @@
+wasd_bestnid:
+    resource: "@WasdBestnidBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 
 usuario_logout:
     pattern: /logout
