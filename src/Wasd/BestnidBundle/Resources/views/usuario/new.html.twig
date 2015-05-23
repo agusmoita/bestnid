@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <h1>usuario creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('usuario') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
