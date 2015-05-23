@@ -1,0 +1,108 @@
+/*
+======================== REGULAR ============================*/
+
+@font-face {
+    font-family: 'OpenSansRegular';
+    src: url('../fonts/opensans/opensans-regular_0.eot');
+    src: url('../fonts/opensans/opensans-regular_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-regular_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-regular_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-regular_0.svg#OpenSansRegular') format('svg');
+}
+
+
+/*
+======================== ITALIC ============================*/
+
+@font-face {
+    font-family: 'OpenSansItalic';
+    src: url('../fonts/opensans/opensans-italic_0.eot');
+    src: url('../fonts/opensans/opensans-italic_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-italic_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-italic_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-italic_0.svg#OpenSansItalic') format('svg');
+}
+
+/*
+======================== LIGHT ============================*/
+
+@font-face {
+    font-family: 'OpenSansLight';
+    src: url('../fonts/opensans/opensans-light_0.eot');
+    src: url('../fonts/opensans/opensans-light_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-light_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-light_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-light_0.svg#OpenSansLight') format('svg');
+}
+
+/*
+======================== LIGHT ITALIC ============================*/
+
+@font-face {
+    font-family: 'OpenSansLightItalic';
+    src: url('../fonts/opensans/opensans-lightitalic_0.eot');
+    src: url('../fonts/opensans/opensans-lightitalic_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-lightitalic_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-lightitalic_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-lightitalic_0.svg#OpenSansLightItalic') format('svg');
+}
+
+
+/*
+======================== BOLD ============================*/
+@font-face {
+    font-family: 'OpenSansBold';
+    src: url('../fonts/opensans/opensans-bold_0.eot');
+    src: url('../fonts/opensans/opensans-bold_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-bold_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-bold_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-bold_0.svg#OpenSansBold') format('svg');
+}
+
+/*
+======================== BOLD ITALIC ============================*/
+
+@font-face {
+    font-family: 'OpenSansBoldItalic';
+    src: url('../fonts/opensans/opensans-bolditalic_0.eot');
+    src: url('../fonts/opensans/opensans-bolditalic_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-bolditalic_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-bolditalic_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-bolditalic_0.svg#OpenSansBoldItalic') format('svg');
+}
+
+/*
+======================== CONDENSED BOLD ============================*/
+
+@font-face {
+    font-family: 'OpenSansCondensedBold';
+    src: url('../fonts/opensans/opensans-condbold_0.eot');
+    src: url('../fonts/opensans/opensans-condbold_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-condbold_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-condbold_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-condbold_0.svg#OpenSansCondensedBold') format('svg');
+}
+
+/*
+======================== CONDENSED LIGHT ============================*/
+
+@font-face {
+    font-family: 'OpenSansCondensedLight';
+    src: url('../fonts/opensans/opensans-condlight_0.eot');
+    src: url('../fonts/opensans/opensans-condlight_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-condlight_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-condlight_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-condlight_0.svg#OpenSansCondensedLight') format('svg');
+}
+
+/*
+======================== CONDENSED LIGHT ITALIC ============================*/
+
+@font-face {
+    font-family: 'OpenSansCondensedLightItalic';
+    src: url('../fonts/opensans/opensans-condlightitalic_0.eot');
+    src: url('../fonts/opensans/opensans-condlightitalic_0.eot') format('embedded-opentype'),
+         url('../fonts/opensans/opensans-condlightitalic_0.woff') format('woff'),
+         url('../fonts/opensans/opensans-condlightitalic_0.ttf') format('truetype'),
+         url('../fonts/opensans/opensans-condlightitalic_0.svg#OpenSansCondensedLightItalic') format('svg');
+}

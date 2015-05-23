@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link rel="shortcut icon" href="img/ico/favicon.ico">
+
+        <title>Ingeniería Fernandez Pacchialat s.r.l.</title>
+
+{% block stylesheets %}
+        <!-- Bootstrap Menu -->
+        <link href="{{ asset('css/jquery.metisMenu.css') }}" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Estilos personalizados -->
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <!-- Iconos font-awsome -->
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+        <!-- Fuente OpenSans -->
+        <link href="{{ asset('css/opensans.css') }}" rel="stylesheet">
+
+        <link href="{{ asset('css/bootstrap-table.css') }}" rel="stylesheet">
+        
+        <!--[if lt IE 8]>
+            <link href="/css/bootstrap-ie7.css" rel="stylesheet">
+        <![endif]-->
+{% endblock %}
+        
+    </head>
+    <body>
+        {% block modals %}{% endblock %}
+        {# MENU #}
+            <nav class="navbar navbar-custom navbar-fixed-top small">
+                <div class="container-fluid">
+                {# boton menu-responsive #}
+                    <div class="navbar-header navbar-custom">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Menu</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                {# fin boton menu-responsive #}
+                    <div class="collapse navbar-collapse navbar-custom" id="bs-example-navbar-collapse-1">
+                    {# menu #}
+                        <ul class="nav navbar-nav navbar-custom">
+                            {# <li><a class="navbar-brand"><i class="glyphicon glyphicon-globe"></i> IFP</a></li>
+                            <li class="active"><a href="{{ path('default') }}"><i class="glyphicon glyphicon-home"></i></a></li> #}
+                            {# {% if not app.user %}
+                                <li><a href="{{ path('nosotros') }}">Sobre nosotros</a></li>
+                                <li><a href="{{ path('servicios_estatico') }}">Servicios</a></li>
+                                <li><a href="{{ path('clientes') }}">Clientes</a></li>
+                                <li><a href="{{ path('articulo') }}">Artículos</a></li>
+                                <li><a href="{{ path('links') }}">Links</a></li>
+                                <li><a href="{{ path('contacto') }}">Contacto</a></li>
+                            {% endif %}
+                            {% if app.user %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Trabajos<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Listado de Trabajos</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Nuevo Trabajo</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Servicios<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Listado de Servicios</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Nuevo Servicio</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Clientes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Listado de Clientes</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Nuevo Cliente</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Medios<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('tipomedio') }}">Listado de Medios</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('tipomedio_new') }}">Nuevo Medio</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('pedido') }}">Listado de Pedidos</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('pedido_new') }}">Nuevo Pedido</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('equipo') }}">Listado de Equipos</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('equipo_new') }}">Nuevo Equipo</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Artículos<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('articulo') }}">Listado de Artículos</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('articulo_new') }}">Nuevo Artículo</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ path('carpeta') }}">Archivos</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('usuario') }}">Usuarios</a>
+                                </li>
+                            {% endif %} #}
+                        </ul>
+                    {# fin menu #}
+                    {# menu intranet #}
+                        <ul class="nav navbar-nav navbar-right navbar-custom">
+                            {# <li class="dropdown">
+                                {% if app.user %}
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">                            
+                                        <span><i class="glyphicon glyphicon-cloud "></i>
+                                        {{ app.user.username }}<i class="caret "></i></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a id="salirSesion" href="{{ path("usuario_logout") }}" class="btn btn-danger cerrar-sesion">Salir</a>
+                                        </li>
+                                    </ul>
+                                {% else %}
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <span><span class="glyphicon glyphicon-cloud"></span>
+                                        Intranet<i class="caret"></i></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a id="iniciarSesion" href="{{ path("usuario_login") }}">Iniciar sesión</a>
+                                        </li>
+                                        <li>
+                                            <a id="registro" href="{{ path("usuario_new") }}">Registrarse</a>
+                                        </li>
+                                    </ul>
+                                {% endif %}
+                            </li> #}
+                        </ul>
+                    {# fin menu intranet #}
+                    </div>
+                </div>
+            </nav>
+        {# FIN MENU #}
+        {# CONTENIDO #}
+            <div class="row container-fluid" style="margin-top: 70px;">
+                <div class="col-xs-12 col-md-12">
+                    {# flashbags #}
+                        <div class="row">
+                            <div class="col-sm-12 col-md-8 col-md-offset-2">
+                                {% if app.session.flashbag.has('aviso_exito') %}
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert">
+                                            <span aria-hidden="true">&times;</span>
+                                            <span class="sr-only">Close</span>
+                                        </button>
+                                        {% for flashMessage in app.session.flashbag.get('aviso_exito') %}
+                                            <p>
+                                                {{ flashMessage|raw }}
+                                            </p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% if app.session.flashbag.has('aviso_error') %}
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert">
+                                            <span aria-hidden="true">&times;</span>
+                                            <span class="sr-only">Close</span>
+                                        </button>
+                                        {% for flashMessage in app.session.flashbag.get('aviso_error') %}
+                                            <p>
+                                                {{ flashMessage|raw }}
+                                            </p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {# fin flashbags #}
+                    {# contenido #}
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="jumbotron img-rounded">
+                                    {% block contenido %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    {# fin contenido #}
+                    <div class="e50"></div>
+                </div>
+            </div>
+        {# FIN CONTENIDO #}
+        {# FOOTER #}
+            <footer class="footer">
+                <div class="container">
+                    <p class="text-muted">Ingeniería Fernandez Pacchialat s.r.l. - La Plata</p>
+                </div>
+            </footer>
+        {# FIN FOOTER #}
+                
+    {% block javascripts %}
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <!-- Bootstrap core JavaScript -->
+        <!-- Librería jQuery requerida por los plugins de JavaScript -->
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.metisMenu.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-table.js') }}"></script>
+        <script src="{{ asset('js/locales/bootstrap-table-es-AR.js') }}"></script>
+
+    {% endblock %}
+    </body>
+</html>

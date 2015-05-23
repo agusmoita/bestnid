@@ -1,0 +1,568 @@
+/* Estilos personalizados SISTEMAS DE INTRANET*/
+
+/*
+===========================================*/
+
+label{
+	margin-top:15px;
+}
+
+.popover.error-popover {
+    background-color: #F2DEDE;
+    border-color: #EED3D7;
+    box-shadow: none;
+    color: #B94A48;
+    cursor: pointer;
+    max-width: none;
+    z-index: 1099;
+}
+.popover.error-popover .popover-content {
+    padding: 6px 14px;
+}
+.popover.error-popover.right .arrow {
+    border-right-color: #EED3D7;
+}
+.popover.error-popover.right .arrow:after {
+    border-right-color: #F2DEDE;
+}
+
+.popover.error-popover.top .arrow {
+    border-top-color: #EED3D7;
+    left: 30px;
+}
+.popover.error-popover.top .arrow:after {
+    border-top-color: #F2DEDE;
+}
+
+/* FIN POPOVER */
+
+a {
+	color:#444;
+}
+
+a:hover{
+	text-decoration:none;
+	color:#aaa;
+	}
+
+h1{
+	margin:0 0 25px 0;
+	text-align:left!important;
+	font-size:1.7em;
+}
+
+.header-main{
+background:#f5802d;
+color:#fff;
+border-bottom:solid 2px #f5802d;
+}
+
+.sistema{
+	font-size:18pt;
+	margin:10px 0;
+	color:#ccc;
+	float:left; 
+    
+}
+
+.sistema a{
+	color:#fff;
+	 
+    
+}
+
+
+.user{
+	height:30px;
+	background:#999;
+	}
+	
+
+	
+.title-form{
+	/*padding: 15px;*/
+	padding:5px;
+    margin-bottom: 20px;
+    /*border-bottom:3px solid #f5802d;*/
+    border-radius: 4px;
+	/*background:#f7d3b3;*/
+	font-size:14pt;
+	color:#666;
+	/*font-weight:bold;*/
+	display:block;
+	
+}	
+	
+.ba{
+	background:#f5802d;
+	color:#fff;
+	display:block;
+}
+
+.ba2{
+	background:#f8a972;
+	color:#fff;
+	display:block;
+}
+
+.panel-title ba{
+	margin:0;
+	background:#000;
+}
+
+
+#menu{
+	text-decoration:none;
+	background:#f5f5f5;
+	min-height:500px;
+	margin:-25px 0 0 -13px;
+	
+	/*margin: -25px 0 0 -70px;*/
+	padding-top:10px;
+	width:250px;
+	
+	
+	/*border:solid 1px #ccc;*/
+	
+     }
+#menu a{
+	color:#999;
+	
+	padding:5px 18px;
+	display:block;
+	height:auto;
+	 }
+ 
+#menu a:hover{
+	background:#ebebeb;
+	border-left: solid 2px #ccc;
+     }
+
+	 	 
+ul{
+    list-style:none;
+	background:#fff;
+	
+  }
+#menu li > ul li {
+    padding: 0 15px;
+	
+            }
+#menu li > ul li a:hover {
+	background:#FFF;
+            }			
+
+
+.error{
+display:none;
+margin:0;
+}
+
+.error{
+display:none;
+}
+
+.error p{
+color:#a00f00 !important;
+font-family:'OpenSansBold', Helvetica, Arial, sans-serif !important;
+
+}
+
+.mostrar.error{
+display:block;
+}
+.e1500{
+	height:1500px;
+     }
+
+.e50{
+	height:50px;
+     }
+     
+.e30{
+	height:30px;
+     }
+	 
+.e10{
+	height:10px;
+     }
+	 
+.form-group{
+	padding-left:15px;
+}
+
+
+.breadcrumb{
+	padding: 8px 1px;
+	background:none;
+	margin:0;
+	border-top:solid 1px #d5d5d5;
+	
+}
+
+.breadcrumb a{
+	color:#CCC;
+}
+.breadcrumb .active{
+	color:#fff;
+}
+
+.breadcrumb > li + li:before {
+  padding: 0 ;
+}
+
+.btn-ba {
+  color: #fff;
+  background-color: #f5802d;
+  border-color: #ccc;
+}
+
+
+.btn-ba:hover,
+.btn-ba:focus,
+.btn-ba:active,
+.btn-ba.active,
+.open .dropdown-toggle.btn-ba {
+  color: #fff;
+  background-color: #da610c;
+  border-color: #adadad;
+}
+.secondary {
+  background-color: #999;
+}
+
+.secondary:hover,
+.secondary:focus,
+.secondary:active,
+.secondary.active,
+.open .dropdown-toggle.secondary {
+  color: #fff;
+  background-color: #777;
+  border-color: #adadad;
+}
+
+
+
+
+
+
+.panel-ba {
+  border-color: #f5802d;
+}
+.panel-ba > .panel-heading {
+  color: #fff;
+  background-color: #f5802d;
+  border-color: #f5802d;
+}
+.panel-ba > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #f5802d;
+}
+.panel-ba > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #f5802d;
+}
+
+.glyphicon-user{
+	margin-top:15px;
+}
+ .btn-volver {
+	 padding:2px 8px;
+	 
+	 color:#FFF;
+ }
+ 
+  .btn-volver a{
+	 color:#fff;
+ }
+ 
+  .btn-volver a:hover{
+	  text-decoration:none;
+	 color:#d5d5d5;
+ }
+
+
+
+/*
+==============================  Estilos comunes  =============================*/
+
+/* 
+font-family: 'OpenSansRegular';
+font-family: 'OpenSansItalic';
+font-family: 'OpenSansLight';
+font-family: 'OpenSansLightItalic';
+font-family: 'OpenSansBold';
+font-family: 'OpenSansBoldItalic';
+font-family: 'OpenSansCondensedBold';
+font-family: 'OpenSansCondensedLight';
+font-family: 'OpenSansCondensedLightItalic'; 
+*/
+
+*{padding:0;
+margin:0;
+}
+
+body{
+font-family: 'OpenSansRegular', Helvetica, Arial, sans-serif;
+}
+
+.no-pad{
+padding:0;
+}
+
+.color-ba{
+color:#f5802d;
+}
+
+.bg-ba{
+background:#f5802d;
+}
+
+.label-ba{
+background:#f5802d;
+}
+
+th{
+font-weight:bold;
+font-family: 'OpenSansBold';
+}
+
+/*
+====================================== INDEX REGISTER - LOGIN ========================================*/
+
+#reg-log{
+background: url('../img/bg-login-1.jpg') center no-repeat;
+min-height:1000px;
+}
+
+
+
+
+/*
+====================================== INDEX SESIÓN INICIADA ========================================*/
+
+.header{
+background:#4A4D58/*#f0f0f0*/;
+padding:0 20px;
+border-bottom: 1px solid #ddd;
+margin-right:0;
+box-shadow: 0 2px 2px -1px rgba(0,0,0,.1);
+-webkit-box-shadow: 0 2px 2px -1px rgba(0,0,0,.1);
+}
+
+.header h1{
+padding:0;
+margin:0;
+text-indent:-999999px;
+}
+
+.header .logo{
+float:left; 
+/*background: url('../img/BA-gris.png') no-repeat;*/
+padding: 13px 0 0 25px;
+
+}
+
+.header .navbar{
+border-bottom:0;
+}
+
+.header .navbar a{
+color:#666666;
+}
+
+.sesion{
+margin:10px;
+float:right;
+}
+
+.sesion  .btn-default{
+color: #777;
+}
+
+.sesion p, .sesion a, .sesion .btn{
+font-size:0.9em;
+}
+
+.sesion .btn.btn-default.dropdown-toggle{
+background:none;
+border:none;
+}
+
+.btn-group.open .dropdown-toggle {
+-webkit-box-shadow: none; 
+ box-shadow: none; 
+}
+
+.btn-group:active .dropdown-toggle {
+-webkit-box-shadow: none; 
+ box-shadow: none; 
+}
+
+.sesion .dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 14px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.sesion .dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 15px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+.col-xs-12 .sesion {
+float:none;
+margin:0 auto;
+}
+
+.mensajes .dropdown-menu{
+left: -100px;
+padding: 15px;
+}
+
+.mensajes .dropdown-menu>li>a{
+text-align:left !important;
+background:none !important;
+color:#f5802d !important;
+padding:0 0 10px 0;
+}
+
+.perfil .dropdown-menu li{
+text-align:center;
+}
+
+.cerrar-sesion{
+width:140px;
+margin:10px
+}
+
+#main{
+margin-top:110px;
+}
+
+footer{
+background: #FCFCFC;
+padding: 10px;
+border-top: 1px solid #eee;
+text-align: center;
+font-size: 0.8em;
+}
+
+.white {
+    color: #fff;
+}
+
+.gris {
+	background:#666;
+}
+
+/*@media (min-width: 320px) {
+  #main {
+    margin-top:175px;
+  }
+
+@media (min-width: 768px) {
+  #main {
+    margin-top:170px;
+  }
+}
+@media (min-width: 992px) {
+  #main {
+    margin-top:115px;
+  }
+  
+ 
+}
+@media (min-width: 1200px) {
+  #main {
+    margin-top:110px;
+  }
+}*/
+
+@media (max-width: 992px) {
+
+  
+   #menu{
+	margin: 0;
+	width:100%;
+	min-height:100%;
+	margin:-25px 0 0 0;
+}
+.navbar-fixed-top{
+	position:absolute;
+}
+
+#main{
+	margin-top:200px;
+}
+}
+
+@media (max-width: 769px) {
+	#main{
+	margin-top:165px;
+}
+
+.sistema{
+	font-size:12pt;
+}
+}
+
+/*
+===================== Errores ====================*/
+.error{
+display:none;
+}
+
+.error p{
+color:#a00f00 !important; 
+font-weight:bold;
+font-family:'OpenSansBold', Helvetica, Arial, sans-serif !important;
+padding: 3px 0 15px;
+font-size:0.8em;
+}
+
+
+.mostrar.error{
+display:block;
+}
+
+/*
+============================== P A G I N A C I Ó N ===========================*/
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+z-index: 2;
+color: #fff;
+background-color: #118B17;
+border-color: #06117D;
+cursor: default;
+}
+
+.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus {
+color: #222;
+background-color: #f5f5f5;
+border-color: #ddd;}
+
+.pagination>li>a, .pagination>li>span {
+color: #118B17;
+font-weight:bold;
+}
+
+
+/* IE7 Only */
+*:first-child+html #main {margin-top : 195px;}
+*:first-child+html .col-md-9 {
+    width: 66.66666667%;
+  }
+
+/* IE6 Only */
+* html #main {margin-top : 195px;}

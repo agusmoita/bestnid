@@ -1,0 +1,6 @@
+{
+	"preset": "jquery",
+	"validateLineBreaks": "LF",
+	"validateIndentation": 2,
+	"excludeFiles": ["node_modules/**"]
+}
