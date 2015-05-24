@@ -54,3 +54,4 @@ app/cache/prod/*
 *.log
 app/config/parameters.yml
 *.php~
+web/uploads/images/*
