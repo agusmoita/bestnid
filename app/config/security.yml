@@ -1,0 +1,28 @@
+security:
+    firewalls:
+        bestnid:
+            pattern: ^/*
+            anonymous: ~
+            form_login:
+                login_path: usuario_login
+                check_path: usuario_login_check
+            logout:
+                path: usuario_logout
+                target: default
+            remember_me:
+                key: bestnid1234
+                lifetime: 604800
+            
+    access_control:
+        # - { path: ^/intranet/usuario/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/intranet/usuario/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/intranet/*, roles: [ROLE_USUARIO, ROLE_ADMIN] }
+        # - { path: ^/articulo/intranet/*, roles: [ROLE_USUARIO, ROLE_ADMIN] }
+
+        
+    providers:
+        usuarios:
+            entity: { class: Wasd\BestnidBundle\Entity\usuario, property: user_name }
+            
+    encoders:
+        Wasd\BestnidBundle\Entity\usuario: plaintext

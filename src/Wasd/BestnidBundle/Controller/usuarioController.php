@@ -50,9 +50,13 @@ class usuarioController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $entity->setRol('ROLE_USUARIO');
+
             $em->persist($entity);
             $em->flush();
-
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+                    'Usuario creado correctamente.');
             return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
         }
 
@@ -76,7 +80,7 @@ class usuarioController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Registrarse'));
 
         return $form;
     }
@@ -162,7 +166,7 @@ class usuarioController extends Controller
     {
         $form = $this->createForm(new usuarioType(), $entity, array(
             'action' => $this->generateUrl('usuario_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'POST',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
@@ -173,7 +177,7 @@ class usuarioController extends Controller
      * Edits an existing usuario entity.
      *
      * @Route("/{id}", name="usuario_update")
-     * @Method("PUT")
+     * @Method("POST")
      * @Template("WasdBestnidBundle:usuario:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -206,7 +210,7 @@ class usuarioController extends Controller
      * Deletes a usuario entity.
      *
      * @Route("/{id}", name="usuario_delete")
-     * @Method("DELETE")
+     * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -239,7 +243,7 @@ class usuarioController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('usuario_delete', array('id' => $id)))
-            ->setMethod('DELETE')
+            ->setMethod('POST')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;

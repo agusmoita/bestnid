@@ -3,6 +3,7 @@
 namespace Wasd\BestnidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * usuario
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\usuarioRepository")
  */
-class usuario
+class usuario implements UserInterface
 {
     /**
      * @var integer
@@ -20,6 +21,13 @@ class usuario
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_name", type="string", length=100)
+     */
+    private $user_name;
 
     /**
      * @var string
@@ -48,6 +56,20 @@ class usuario
      * @ORM\Column(name="status", type="boolean")
      */
     private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=16)
+     */
+    private $password;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rol", type="string", length=16)
+     */
+    private $rol;
 
 
     /**
@@ -150,5 +172,87 @@ class usuario
     public function getStatus()
     {
         return $this->status;
+    }
+
+    function eraseCredentials()
+    {
+    }
+    
+    function getRoles(){
+        return array($this->getRol());
+    }
+
+    /**
+     * Set user_name
+     *
+     * @param string $userName
+     * @return usuario
+     */
+    public function setUserName($userName)
+    {
+        $this->user_name = $userName;
+    
+        return $this;
+    }
+
+    /**
+     * Get user_name
+     *
+     * @return string 
+     */
+    public function getUserName()
+    {
+        return $this->user_name;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Set rol
+     *
+     * @param string $rol
+     * @return usuario
+     */
+    public function setRol($rol)
+    {
+        $this->rol = $rol;
+    
+        return $this;
+    }
+
+    /**
+     * Get rol
+     *
+     * @return string 
+     */
+    public function getRol()
+    {
+        return $this->rol;
     }
 }
