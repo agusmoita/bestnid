@@ -33,8 +33,23 @@
                     {{ form_errors(edit_form.email) }}
                 </div>
             </div>
+        </div>              
+        <div class="row">
+            <div class="form-group col-md-6 col-md-offset-3">
+                <label>Contraseña</label>
+                <div class="input-group col-md-12">
+                    {% for contrasenia in edit_form.password %}
+                        {{ form_widget(contrasenia, { 'attr': {'value': entity.password, 'class': 'form-control' } }) }} 
+                        {% if loop.first %}
+                            <span class="input-group-addon"> </span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(edit_form.password) }}
+                </div>
+            </div>
         </div>
-
         <div class="row">
             <div class="form-group col-md-3 col-md-offset-3">              
                 {{ form_label(edit_form.apellido) }}
@@ -55,27 +70,32 @@
                 </div>
             </div>
         </div>
-              
         <div class="row">
-            <div class="form-group col-md-6 col-md-offset-3">
-                <label>Contraseña</label>
+            <div class="form-group col-md-3 col-md-offset-3">              
+                {{ form_label(edit_form.telefono) }}
                 <div class="input-group col-md-12">
-                    {% for contrasenia in edit_form.password %}
-                        {{ form_widget(contrasenia, { 'attr': {'value': entity.password, 'class': 'form-control' } }) }} 
-                        {% if loop.first %}
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
-                        {% endif %}
-                    {% endfor %}
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                    {{ form_widget(edit_form.telefono, { 'attr': {'class': 'form-control'} }) }} 
                 </div>
                 <div class="text-danger">
-                    {{ form_errors(edit_form.password) }}
+                    {{ form_errors(edit_form.telefono) }}
+                </div>
+            </div>
+            <div class="form-group col-md-3">              
+                {{ form_label(edit_form.tarjeta) }}
+                <div class="input-group col-md-12">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                    {{ form_widget(edit_form.tarjeta, { 'attr': {'class': 'form-control'} }) }} 
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(edit_form.tarjeta) }}
                 </div>
             </div>
         </div>
                 <br>
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-success'} }) }}
+                {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
             </div>
             <div class="col-md-3">
                 <a href="{{ path('usuario_show', {'id': entity.id } ) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Cancelar">

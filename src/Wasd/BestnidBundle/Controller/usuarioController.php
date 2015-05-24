@@ -53,6 +53,7 @@ class usuarioController extends Controller
 
             $entity->setRol('ROLE_USUARIO');
             $entity->setStatus(false);
+            $entity->setFechaAlta(new \DateTime());
 
             $em->persist($entity);
             $em->flush();

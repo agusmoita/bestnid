@@ -26,6 +26,8 @@ class usuarioType extends AbstractType
                 'options' => array('label' => 'Contraseña'),
                 'required' => true
             ))
+            ->add('telefono')
+            ->add('tarjeta')
         ;
     }
     

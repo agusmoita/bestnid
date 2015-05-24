@@ -71,6 +71,20 @@ class usuario implements UserInterface
      */
     private $rol;
 
+    /**
+     * @ORM\Column(name="telefono", type="string", length=30)
+     */
+     private $telefono;
+
+     /**
+      * @ORM\Column(name="fecha_alta", type="date")
+      */
+      private $fecha_alta;
+
+      /**
+       * @ORM\Column(name="tarjeta", type="integer")
+       */
+       private $tarjeta;
 
     /**
      * Get id
@@ -254,5 +268,74 @@ class usuario implements UserInterface
     public function getRol()
     {
         return $this->rol;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     * @return usuario
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string 
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set fecha_alta
+     *
+     * @param \DateTime $fechaAlta
+     * @return usuario
+     */
+    public function setFechaAlta($fechaAlta)
+    {
+        $this->fecha_alta = $fechaAlta;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha_alta
+     *
+     * @return \DateTime 
+     */
+    public function getFechaAlta()
+    {
+        return $this->fecha_alta;
+    }
+
+    /**
+     * Set tarjeta
+     *
+     * @param integer $tarjeta
+     * @return usuario
+     */
+    public function setTarjeta($tarjeta)
+    {
+        $this->tarjeta = $tarjeta;
+    
+        return $this;
+    }
+
+    /**
+     * Get tarjeta
+     *
+     * @return integer 
+     */
+    public function getTarjeta()
+    {
+        return $this->tarjeta;
     }
 }

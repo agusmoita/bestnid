@@ -36,7 +36,7 @@
                         {% endif %}
                         {{ form_widget(contrasenia, { 'attr': {'class': 'form-control', 'placeholder': marca } }) }} 
                         {% if loop.first %}
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
+                            <span class="input-group-addon"> </span>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -66,10 +66,32 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-md-3 col-md-offset-3">              
+                <div class="input-group col-md-12">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                    {{ form_widget(form.telefono, { 'attr': {'class': 'form-control', 'placeholder': 'Teléfono'} }) }} 
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(form.telefono) }}
+                </div>
+            </div>
+            <div class="form-group col-md-3">              
+                <div class="input-group col-md-12">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                    {{ form_widget(form.tarjeta, { 'attr': {'class': 'form-control', 'placeholder': 'Tarjeta'} }) }} 
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(form.tarjeta) }}
+                </div>
+            </div>
+        </div>
+
                               
         <div class="row">
             <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
-                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-success'} }) }}
+                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
             </div>
         </div>
         
