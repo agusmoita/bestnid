@@ -52,3 +52,5 @@ app/cache/prod
 app/cache/prod/
 app/cache/prod/*
 *.log
+app/config/parameters.yml
+*.php~
