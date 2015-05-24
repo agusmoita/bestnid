@@ -55,7 +55,8 @@ class ProductoController extends Controller
 
             $plazo = $form->getData()->getVencimiento();
             $fechaAlta = new \DateTime();
-            $fechaFin = date_modify($fechaAlta, "+".$plazo." days");
+            $fechaFin = new \DateTime();
+            date_modify($fechaFin, "+".$plazo." days");
 
             $id = $this->getUser()->getId();
             $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
