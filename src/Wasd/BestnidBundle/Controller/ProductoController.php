@@ -53,7 +53,7 @@ class ProductoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $session = $this->getRequest()->getSession();
 
-            $plazo = $form->getVencimiento()->getData();
+            $plazo = $form->getData()->getVencimiento();
             $fechaAlta = new \DateTime();
             $fechaFin = date_modify($fechaAlta, "+".$plazo." days");
 

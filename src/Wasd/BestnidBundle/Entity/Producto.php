@@ -3,6 +3,7 @@
 namespace Wasd\BestnidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Producto
