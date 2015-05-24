@@ -52,6 +52,7 @@ class usuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $entity->setRol('ROLE_USUARIO');
+            $entity->setStatus(false);
 
             $em->persist($entity);
             $em->flush();
