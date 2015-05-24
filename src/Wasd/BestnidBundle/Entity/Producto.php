@@ -56,6 +56,15 @@ class Producto
      */
     private $vencimiento;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rutaFoto", type="string", length=255)
+     */
+    private $rutaFoto;
+    
+    private $foto;
+
 
     /**
      * Get id
@@ -180,5 +189,65 @@ class Producto
     public function getVencimiento()
     {
         return $this->vencimiento;
+    }
+
+
+    /**
+     * Set rutaFoto
+     *
+     * @param string $rutaFoto
+     * @return Producto
+     */
+    public function setRutaFoto($rutaFoto)
+    {
+        $this->rutaFoto = $rutaFoto;
+
+        return $this;
+    }
+
+    /**
+     * Get rutaFoto
+     *
+     * @return string 
+     */
+    public function getRutaFoto()
+    {
+        return $this->rutaFoto;
+    }
+        
+    /**
+     * Set foto.
+     *
+     * @param UploadedFile $foto
+     */
+    public function setFoto(UploadedFile $foto = null)
+    {
+        $this->foto = $foto;
+    }
+
+    /**
+     * Get foto.
+     *
+     * @return UploadedFile
+     */
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * Sube la foto de la oferta copiándola en el directorio que se indica y
+     * guardando en la entidad la ruta hasta la foto
+     *
+     * @param string $directorioDestino Ruta completa del directorio al que se sube la foto
+     */
+    public function subirFoto($directorioDestino)
+    {
+        if (null === $this->getFoto()) {
+            return;
+        }
+        $nombreArchivoFoto = uniqid('bestnid-').'-1.'.$this->getFoto()->guessExtension();
+        $this->getFoto()->move($directorioDestino, $nombreArchivoFoto);
+        $this->setRutaFoto($nombreArchivoFoto);
     }
 }

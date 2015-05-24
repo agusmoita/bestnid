@@ -26,9 +26,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        # directorio_imagenes: '/ifp/web/uploads/images/'
-        # directorio_archivos: '/ifp/web/uploads/archivos/'
-        # directorio_articulos: '/ifp/web/uploads/articulos/'
+        directorio_imagenes: '/bestnid/web/uploads/images/'
+
     form:
         resources:
             # - 'IFPSistemaBundle:Form:form_errors.html.twig'
@@ -77,6 +76,4 @@ swiftmailer:
     spool:     { type: memory }
 
 parameters:
-    # ifp.directorio.imagenes: %kernel.root_dir%/../web/uploads/images/
-    # ifp.directorio.archivos: %kernel.root_dir%/../web/uploads/archivos/
-    # ifp.directorio.articulos: %kernel.root_dir%/../web/uploads/articulos/
+    bestnid.directorio.imagenes: %kernel.root_dir%/../web/uploads/images/
