@@ -250,4 +250,8 @@ class Producto
         $this->getFoto()->move($directorioDestino, $nombreArchivoFoto);
         $this->setRutaFoto($nombreArchivoFoto);
     }
+
+    public function __toString(){
+        return $this->getTitulo();
+    }
 }
