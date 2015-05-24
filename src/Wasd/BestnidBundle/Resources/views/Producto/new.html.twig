@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <form action="{{ path('producto_create') }}" method="post" {{ form_enctype(form) }} id="form" role="form">
+        <h3 class="titulo col-md-offset-3 lead">Nuevo producto</h3>
+        
+        <div class="row">
+            <div class="form-group col-md-6 col-md-offset-3">              
+                <div class="input-group col-md-12">
+                    {{ form_widget(form.titulo, { 'attr': {'class': 'form-control', 'placeholder': 'Titulo'} }) }} 
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(form.titulo) }}
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="form-group col-md-6 col-md-offset-3">              
+                <div class="input-group col-md-12">
+                    {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control', 'placeholder': 'Descripción'} }) }} 
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(form.descripcion) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2 col-md-offset-3">
+            	<label class="required">Vencimiento</label>              
+                <div class="input-group col-md-12">
+                    {{ form_widget(form.vencimiento, { 'attr': {'class': 'form-control'} }) }}
+                    <span class="input-group-addon">Días</span> 
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(form.vencimiento) }}
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-md-offset-1">
+            	<label class="required">Categoría</label>              
+                <div class="input-group col-md-12">
+                    {{ form_widget(form.categoria, { 'attr': {'class': 'form-control'} }) }} 
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(form.categoria) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4 col-md-offset-3">
+            	<label class="required">Foto</label>              
+                <div class="input-group col-md-12">
+                    {{ form_widget(form.foto, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="text-danger">
+                    {{ form_errors(form.foto) }}
+                </div>
+            </div>
+        </div>
+
+                              
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
+                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}
