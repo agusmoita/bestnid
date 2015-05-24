@@ -65,6 +65,18 @@ class Producto
     
     private $foto;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Categoria")
+     * @ORM\JoinColumn(name="categoria", referencedColumnName="id")
+     */
+     private $categoria;
+
+     /**
+      * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Usuario", inversedBy="productos")
+      * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
+      */
+      private $usuario;
+
 
     /**
      * Get id
@@ -253,5 +265,51 @@ class Producto
 
     public function __toString(){
         return $this->getTitulo();
+    }
+
+    /**
+     * Set categoria
+     *
+     * @param \Wasd\BestnidBundle\Entity\Categoria $categoria
+     * @return Producto
+     */
+    public function setCategoria(\Wasd\BestnidBundle\Entity\Categoria $categoria = null)
+    {
+        $this->categoria = $categoria;
+    
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \Wasd\BestnidBundle\Entity\Categoria 
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \Wasd\BestnidBundle\Entity\Usuario $usuario
+     * @return Producto
+     */
+    public function setUsuario(\Wasd\BestnidBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+    
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \Wasd\BestnidBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

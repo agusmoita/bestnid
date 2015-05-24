@@ -86,6 +86,11 @@ class Usuario implements UserInterface
        */
        private $tarjeta;
 
+       /**
+        * @ORM\OneToMany(targetEntity="Wasd\BestnidBundle\Entity\Producto", mappedBy="usuario")
+        */
+        private $productos;
+
     /**
      * Get id
      *
@@ -337,5 +342,45 @@ class Usuario implements UserInterface
     public function getTarjeta()
     {
         return $this->tarjeta;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add productos
+     *
+     * @param \Wasd\BestnidBundle\Entity\Producto $productos
+     * @return Usuario
+     */
+    public function addProducto(\Wasd\BestnidBundle\Entity\Producto $productos)
+    {
+        $this->productos[] = $productos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove productos
+     *
+     * @param \Wasd\BestnidBundle\Entity\Producto $productos
+     */
+    public function removeProducto(\Wasd\BestnidBundle\Entity\Producto $productos)
+    {
+        $this->productos->removeElement($productos);
+    }
+
+    /**
+     * Get productos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductos()
+    {
+        return $this->productos;
     }
 }
