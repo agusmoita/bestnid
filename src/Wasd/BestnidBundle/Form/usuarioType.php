@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class usuarioType extends AbstractType
+class UsuarioType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -37,7 +37,7 @@ class usuarioType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wasd\BestnidBundle\Entity\usuario'
+            'data_class' => 'Wasd\BestnidBundle\Entity\Usuario'
         ));
     }
 

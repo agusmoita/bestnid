@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * usuario
+ * Usuario
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\usuarioRepository")
+ * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\Repository\UsuarioRepository")
  */
-class usuario implements UserInterface
+class Usuario implements UserInterface
 {
     /**
      * @var integer
@@ -100,7 +100,7 @@ class usuario implements UserInterface
      * Set nombre
      *
      * @param string $nombre
-     * @return usuario
+     * @return Usuario
      */
     public function setNombre($nombre)
     {
@@ -123,7 +123,7 @@ class usuario implements UserInterface
      * Set apellido
      *
      * @param string $apellido
-     * @return usuario
+     * @return Usuario
      */
     public function setApellido($apellido)
     {
@@ -146,7 +146,7 @@ class usuario implements UserInterface
      * Set email
      *
      * @param string $email
-     * @return usuario
+     * @return Usuario
      */
     public function setEmail($email)
     {
@@ -169,7 +169,7 @@ class usuario implements UserInterface
      * Set status
      *
      * @param boolean $status
-     * @return usuario
+     * @return Usuario
      */
     public function setStatus($status)
     {
@@ -200,7 +200,7 @@ class usuario implements UserInterface
      * Set user_name
      *
      * @param string $userName
-     * @return usuario
+     * @return Usuario
      */
     public function setUserName($userName)
     {
@@ -223,7 +223,7 @@ class usuario implements UserInterface
      * Set password
      *
      * @param string $password
-     * @return usuario
+     * @return Usuario
      */
     public function setPassword($password)
     {
@@ -251,7 +251,7 @@ class usuario implements UserInterface
      * Set rol
      *
      * @param string $rol
-     * @return usuario
+     * @return Usuario
      */
     public function setRol($rol)
     {
@@ -274,7 +274,7 @@ class usuario implements UserInterface
      * Set telefono
      *
      * @param string $telefono
-     * @return usuario
+     * @return Usuario
      */
     public function setTelefono($telefono)
     {
@@ -297,7 +297,7 @@ class usuario implements UserInterface
      * Set fecha_alta
      *
      * @param \DateTime $fechaAlta
-     * @return usuario
+     * @return Usuario
      */
     public function setFechaAlta($fechaAlta)
     {
@@ -320,7 +320,7 @@ class usuario implements UserInterface
      * Set tarjeta
      *
      * @param integer $tarjeta
-     * @return usuario
+     * @return Usuario
      */
     public function setTarjeta($tarjeta)
     {

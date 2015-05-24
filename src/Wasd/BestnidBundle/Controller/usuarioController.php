@@ -7,15 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Wasd\BestnidBundle\Entity\usuario;
-use Wasd\BestnidBundle\Form\usuarioType;
+use Wasd\BestnidBundle\Entity\Usuario;
+use Wasd\BestnidBundle\Form\UsuarioType;
 
 /**
  * usuario controller.
  *
  * @Route("/usuario")
  */
-class usuarioController extends Controller
+class UsuarioController extends Controller
 {
 
     /**
@@ -29,7 +29,7 @@ class usuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('WasdBestnidBundle:usuario')->findAll();
+        $entities = $em->getRepository('WasdBestnidBundle:Usuario')->findAll();
 
         return array(
             'entities' => $entities,
@@ -40,11 +40,11 @@ class usuarioController extends Controller
      *
      * @Route("/", name="usuario_create")
      * @Method("POST")
-     * @Template("WasdBestnidBundle:usuario:new.html.twig")
+     * @Template("WasdBestnidBundle:Usuario:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new usuario();
+        $entity = new Usuario();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -75,9 +75,9 @@ class usuarioController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(usuario $entity)
+    private function createCreateForm(Usuario $entity)
     {
-        $form = $this->createForm(new usuarioType(), $entity, array(
+        $form = $this->createForm(new UsuarioType(), $entity, array(
             'action' => $this->generateUrl('usuario_create'),
             'method' => 'POST',
         ));
@@ -96,7 +96,7 @@ class usuarioController extends Controller
      */
     public function newAction()
     {
-        $entity = new usuario();
+        $entity = new Usuario();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -116,7 +116,7 @@ class usuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:usuario')->find($id);
+        $entity = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find usuario entity.');
@@ -141,7 +141,7 @@ class usuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:usuario')->find($id);
+        $entity = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find usuario entity.');
@@ -164,9 +164,9 @@ class usuarioController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(usuario $entity)
+    private function createEditForm(Usuario $entity)
     {
-        $form = $this->createForm(new usuarioType(), $entity, array(
+        $form = $this->createForm(new UsuarioType(), $entity, array(
             'action' => $this->generateUrl('usuario_update', array('id' => $entity->getId())),
             'method' => 'POST',
         ));
@@ -180,7 +180,7 @@ class usuarioController extends Controller
      *
      * @Route("/{id}", name="usuario_update")
      * @Method("POST")
-     * @Template("WasdBestnidBundle:usuario:edit.html.twig")
+     * @Template("WasdBestnidBundle:Usuario:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -221,7 +221,7 @@ class usuarioController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('WasdBestnidBundle:usuario')->find($id);
+            $entity = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find usuario entity.');
