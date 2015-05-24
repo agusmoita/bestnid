@@ -106,6 +106,7 @@ class ProductoController extends Controller
     public function newAction()
     {
         $entity = new Producto();
+        $entity->setVencimiento(15);
         $form   = $this->createCreateForm($entity);
 
         return array(

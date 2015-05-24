@@ -16,7 +16,7 @@
             <div class="form-group col-md-3">              
                 <div class="input-group col-md-12">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }} 
+                    {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Email'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(form.email) }}

@@ -23,7 +23,8 @@ class ProductoType extends AbstractType
             ->add('foto','file', array(
                 'label' => 'Foto'
             ))
-            ->add('categoria')
+            ->add('categoria', null, array(
+                'empty_value' => '--Seleccione--'))
         ;
     }
     
