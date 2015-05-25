@@ -13,7 +13,7 @@ use Wasd\BestnidBundle\Form\CategoriaType;
 /**
  * Categoria controller.
  *
- * @Route("/categoria")
+ * @Route("/intranet/categoria")
  */
 class CategoriaController extends Controller
 {

@@ -13,28 +13,11 @@ use Wasd\BestnidBundle\Form\ProductoType;
 /**
  * Producto controller.
  *
- * @Route("/producto")
+ * @Route("/intranet/producto")
  */
 class ProductoController extends Controller
 {
 
-    /**
-     * Lists all Producto entities.
-     *
-     * @Route("/", name="producto")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WasdBestnidBundle:Producto')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
     /**
      * Creates a new Producto entity.
      *
@@ -210,7 +193,7 @@ class ProductoController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('producto_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('producto_show', array('id' => $id)));
         }
 
         return array(
@@ -242,7 +225,7 @@ class ProductoController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('producto'));
+        return $this->redirect($this->generateUrl('default'));
     }
 
     /**

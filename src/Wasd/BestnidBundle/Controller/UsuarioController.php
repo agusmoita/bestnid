@@ -13,7 +13,7 @@ use Wasd\BestnidBundle\Form\UsuarioType;
 /**
  * usuario controller.
  *
- * @Route("/usuario")
+ * @Route("/intranet/usuario")
  */
 class UsuarioController extends Controller
 {
@@ -38,7 +38,7 @@ class UsuarioController extends Controller
     /**
      * Creates a new usuario entity.
      *
-     * @Route("/", name="usuario_create")
+     * @Route("/create", name="usuario_create")
      * @Method("POST")
      * @Template("WasdBestnidBundle:Usuario:new.html.twig")
      */

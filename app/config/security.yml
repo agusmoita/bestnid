@@ -14,15 +14,14 @@ security:
                 lifetime: 604800
             
     access_control:
-        # - { path: ^/intranet/usuario/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/intranet/usuario/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/intranet/*, roles: [ROLE_USUARIO, ROLE_ADMIN] }
-        # - { path: ^/articulo/intranet/*, roles: [ROLE_USUARIO, ROLE_ADMIN] }
+         - { path: ^/intranet/usuario/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/intranet/usuario/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/intranet/*, roles: [ROLE_USUARIO, ROLE_ADMIN] }
 
         
     providers:
         usuarios:
-            entity: { class: Wasd\BestnidBundle\Entity\usuario, property: user_name }
+            entity: { class: Wasd\BestnidBundle\Entity\Usuario, property: user_name }
             
     encoders:
-        Wasd\BestnidBundle\Entity\usuario: plaintext
+        Wasd\BestnidBundle\Entity\Usuario: plaintext

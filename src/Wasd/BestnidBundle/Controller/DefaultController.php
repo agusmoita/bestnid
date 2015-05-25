@@ -15,8 +15,15 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array('name' => 'Gerardo');
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('WasdBestnidBundle:Producto')->findAll();
+
+        return array(
+            'entities' => $entities,
+        );
     }
+
 
     /**
      *
