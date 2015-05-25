@@ -383,4 +383,8 @@ class Usuario implements UserInterface
     {
         return $this->productos;
     }
+
+    public function __toString(){
+        return $this->getUserName();
+    }
 }
