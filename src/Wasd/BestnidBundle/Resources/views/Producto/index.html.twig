@@ -1,51 +1,71 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Producto list</h1>
+{% block javascripts %}
+    {{ parent() }}
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titulo</th>
-                <th>Descripcion</th>
-                <th>Fechaalta</th>
-                <th>Fechafin</th>
-                <th>Vencimiento</th>
-                <th>Rutafoto</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('producto_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.titulo }}</td>
-                <td>{{ entity.descripcion }}</td>
-                <td>{% if entity.fechaAlta %}{{ entity.fechaAlta|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.fechaFin %}{{ entity.fechaFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.vencimiento }}</td>
-                <td>{{ entity.rutaFoto }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('producto_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('producto_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <script type="text/javascript">
 
-        <ul>
-        <li>
-            <a href="{{ path('producto_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+        window.accionFila = { 
+            'change .acciones': function(){
+                   var id = $(this).attr('id');
+                   if($(this).val() == "ver"){
+                       var url = "{{ path('producto_show', { 'id': 'text'}) }}";
+                       url = url.replace("text", id);
+                       console.log('veeer');
+                       window.location.href = url;
+                   }
+                   if($(this).val() == "modificar"){
+                       var url = "{{ path('producto_edit', { 'id': 'text'}) }}";
+                       url = url.replace("text", id);
+                       window.location.href = url;
+                   }
+             }
+        }
+
+    </script>
+{% endblock %}
+
+{% block contenido %}
+    
+    <div class="row">
+        <div class="table-responsive">
+            <table data-toggle="table" data-classes="table table-striped" data-pagination="true" data-search="true" data-search-align="left">
+                <thead>
+                    <tr>
+                        <th data-sortable="true">Título</th>
+                        <th data-sortable="true">Fecha de finalización</th>
+                        <th data-sortable="true">Categoría</th>
+                        <th data-field="acciones" data-events="accionFila">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.titulo }}</td>
+                        <td>{{ entity.fechafin|date('d/m/Y') }}</td>
+                        <td>{{ entity.categoria }}</td>
+                        <td>
+                            <select class="acciones form-control" id="{{ entity.id }}" style="width: 150px">
+                                <option value="">--Seleccione--</option>
+                                <option value="ver">
+                                    <a href="{{ path('producto_show', { 'id': entity.id }) }}">Ver</a>
+                                </option>
+                                <option value="modificar">
+                                    <a href="{{ path('producto_edit', { 'id': entity.id }) }}">Modificar</a>
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="danger">
+                        <td colspan="6">
+                            No hay datos para mostrar.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
