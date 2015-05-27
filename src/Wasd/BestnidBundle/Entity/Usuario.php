@@ -4,12 +4,16 @@ namespace Wasd\BestnidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * Usuario
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\Repository\UsuarioRepository")
+ * @UniqueEntity(fields={"user_name", "email"},
+ *     message="Ya existe un usuario con el mismo nombre y/o email.")
  */
 class Usuario implements UserInterface
 {
