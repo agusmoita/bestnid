@@ -86,7 +86,7 @@ class Usuario implements UserInterface
       private $fecha_alta;
 
       /**
-       * @ORM\Column(name="tarjeta", type="integer")
+       * @ORM\Column(name="tarjeta", type="string", length=16)
        */
        private $tarjeta;
 
@@ -328,7 +328,7 @@ class Usuario implements UserInterface
     /**
      * Set tarjeta
      *
-     * @param integer $tarjeta
+     * @param string $tarjeta
      * @return Usuario
      */
     public function setTarjeta($tarjeta)
@@ -341,7 +341,7 @@ class Usuario implements UserInterface
     /**
      * Get tarjeta
      *
-     * @return integer 
+     * @return string 
      */
     public function getTarjeta()
     {
