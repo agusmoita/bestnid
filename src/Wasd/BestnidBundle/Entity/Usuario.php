@@ -12,8 +12,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\Repository\UsuarioRepository")
- * @UniqueEntity(fields={"user_name", "email"},
- *     message="Ya existe un usuario con el mismo nombre y/o email.")
+ * @UniqueEntity(fields={"user_name"},
+ *     message="Ya existe un usuario con el mismo nombre.")
+ * @UniqueEntity(fields={"email"},
+ *     message="Ya existe un usuario con el mismo email.")
  */
 class Usuario implements UserInterface
 {
