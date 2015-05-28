@@ -58,17 +58,15 @@
                                 <li><a href="{{ path('articulo') }}">Artículos</a></li>
                                 <li><a href="{{ path('links') }}">Links</a></li>
                                 <li><a href="{{ path('contacto') }}">Contacto</a></li>
-                            {% endif %}
+                            {% endif %}#}
                             {% if app.user %}
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Trabajos<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorías<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Listado de Trabajos</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Nuevo Trabajo</a></li>
+                                        <li><a href="{{ path('categoria_new') }}">Nueva Categoría</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
+                               {#<li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Servicios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="#">Listado de Servicios</a></li>
@@ -117,8 +115,8 @@
                                 </li>
                                 <li>
                                     <a href="{{ path('usuario') }}">Usuarios</a>
-                                </li>
-                            {% endif %} #}
+                                </li> #}
+                            {% endif %}
                         </ul>
                     {# fin menu #}
                     {# menu intranet #}
