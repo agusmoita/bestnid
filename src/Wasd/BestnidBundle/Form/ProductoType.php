@@ -24,7 +24,8 @@ class ProductoType extends AbstractType
                 'label' => 'Foto'
             ))
             ->add('categoria', null, array(
-                'empty_value' => '--Seleccione--'))
+                'empty_value' => '--Seleccione--',
+                'required' => true))
         ;
     }
     

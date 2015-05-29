@@ -5,6 +5,7 @@ namespace Wasd\BestnidBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -53,6 +54,7 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=100)
+     * @Assert\Email(message="Debe ingresar un email válido")
      */
     private $email;
 
@@ -89,6 +91,7 @@ class Usuario implements UserInterface
 
       /**
        * @ORM\Column(name="tarjeta", type="string", length=16)
+       * @Assert\Length(min=16, max=16, exactMessage="La tarjeta debe tener 16 dígitos")
        */
        private $tarjeta;
 

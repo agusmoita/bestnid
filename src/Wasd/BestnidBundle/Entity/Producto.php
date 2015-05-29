@@ -4,6 +4,7 @@ namespace Wasd\BestnidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Producto
@@ -54,6 +55,7 @@ class Producto
      * @var integer
      *
      * @ORM\Column(name="vencimiento", type="integer")
+     * @Assert\Range(min=15, max=30, minMessage="Debe ser entre 15 y 30 días", maxMessage="Debe ser entre 15 y 30 días")
      */
     private $vencimiento;
 
@@ -64,6 +66,18 @@ class Producto
      */
     private $rutaFoto;
     
+    /**
+     * @Assert\Image(
+     *     minWidth = 300,
+     *     maxWidth = 600,
+     *     minHeight = 300,
+     *     maxHeight = 600,
+     *     minWidthMessage="La foto no puede tener menos de 300px de ancho",
+     *     maxWidthMessage="La foto no puede tener más de 600px de ancho",
+     *     minHeightMessage="La foto no puede tener menos de 300px de alto",
+     *     maxHeightMessage="La foto no puede tener más de 600px de alto",
+     * )
+     */
     private $foto;
 
     /**
