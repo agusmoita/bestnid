@@ -55,7 +55,7 @@ class DefaultController extends Controller
      *
      * @Route("/login", name="usuario_login")
      * @Route("/login_check", name="usuario_login_check")
-     * @Template("WasdBestnidBundle:usuario:login.html.twig")
+     * @Template("WasdBestnidBundle:Usuario:login.html.twig")
      */
     public function loginAction()
     {
