@@ -33,6 +33,7 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="user_name", type="string", length=100)
+     * @Assert\Length(min=6, minMessage="El nombre de usuario debe tener al menos 6 caracteres")
      */
     private $user_name;
 
@@ -69,6 +70,7 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=16)
+     * @Assert\Length(min=6, minMessage="La contraseña debe tener al menos 6 caracteres")
      */
     private $password;
     
@@ -84,21 +86,21 @@ class Usuario implements UserInterface
      */
      private $telefono;
 
-     /**
-      * @ORM\Column(name="fecha_alta", type="date")
-      */
-      private $fecha_alta;
+    /**
+    * @ORM\Column(name="fecha_alta", type="date")
+    */
+    private $fecha_alta;
 
-      /**
-       * @ORM\Column(name="tarjeta", type="string", length=16)
-       * @Assert\Length(min=16, max=16, exactMessage="La tarjeta debe tener 16 dígitos")
-       */
-       private $tarjeta;
+    /**
+    * @ORM\Column(name="tarjeta", type="string", length=16)
+    * @Assert\Length(min=16, max=16, exactMessage="La tarjeta debe tener 16 dígitos")
+    */
+    private $tarjeta;
 
-       /**
-        * @ORM\OneToMany(targetEntity="Wasd\BestnidBundle\Entity\Producto", mappedBy="usuario")
-        */
-        private $productos;
+    /**
+    * @ORM\OneToMany(targetEntity="Wasd\BestnidBundle\Entity\Producto", mappedBy="usuario")
+    */
+    private $productos;
 
     /**
      * Get id
