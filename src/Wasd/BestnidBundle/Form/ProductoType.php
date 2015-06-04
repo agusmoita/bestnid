@@ -5,6 +5,7 @@ namespace Wasd\BestnidBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class ProductoType extends AbstractType
 {
@@ -25,7 +26,12 @@ class ProductoType extends AbstractType
             ))
             ->add('categoria', null, array(
                 'empty_value' => '--Seleccione--',
-                'required' => true))
+                'required' => true,
+                'query_builder' => function(EntityRepository $er){
+                    return $er->createQueryBuilder('c')
+                                ->orderBy('c.nombre', 'ASC');
+                }
+                ))
         ;
     }
     
