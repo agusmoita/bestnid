@@ -20,7 +20,9 @@ class ProductoType extends AbstractType
             ->add('descripcion','textarea', array(
                 'label' => 'Descripción'
             ))
-            ->add('vencimiento')
+            ->add('vencimiento', null, array(
+                'attr' => array('min' => 15, 'max' => 30)
+                ))
             ->add('foto','file', array(
                 'label' => 'Foto'
             ))
