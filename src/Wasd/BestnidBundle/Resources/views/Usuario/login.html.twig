@@ -17,7 +17,13 @@
                 </div>
             </div>
         </div>
-        
+        {% if error %}
+            <div class="row">
+                <div class="text-danger col-md-3 col-md-offset-3">
+                    Usuario y/o contraseña incorrecta.
+                </div>
+            </div>
+        {% endif %}
         <div class="row">
             <div class="form-group col-md-6 col-md-offset-3">
                 <div class="input-group col-md-12">

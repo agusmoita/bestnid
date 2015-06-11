@@ -8,7 +8,6 @@
             <table data-toggle="table" data-classes="table table-striped" data-sort-name="fechafin" data-pagination="true" data-search="true" data-search-align="left">
                 <thead>
                     <tr>
-                        <th data-align="center" data-sortable="true">Usuario</th>
                         <th data-align="center" data-sortable="true">Título</th>
                         <th data-field="fechafin" data-align="center" data-sortable="true">Fecha de finalización</th>
                         <th data-align="center" data-sortable="true">Categoría</th>
@@ -18,7 +17,6 @@
                 <tbody>
                 {% for entity in entities %}
                     <tr>
-                        <td>{{ entity.usuario }}</td>
                         <td>{{ entity.titulo }}</td>
                         <td>{{ entity.fechafin|date('d/m/Y') }}</td>
                         <td>{{ entity.categoria }}</td>
