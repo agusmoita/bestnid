@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use Wasd\BestnidBundle\Form\EventListener\AddFieldsProductoSubscriber;
 
 class ProductoType extends AbstractType
 {
@@ -23,9 +24,9 @@ class ProductoType extends AbstractType
             ->add('vencimiento', null, array(
                 'attr' => array('min' => 15, 'max' => 30)
                 ))
-            ->add('foto','file', array(
+            /*->add('foto','file', array(
                 'label' => 'Foto'
-            ))
+            ))*/
             ->add('categoria', null, array(
                 'empty_value' => '--Seleccione--',
                 'required' => true,
@@ -35,6 +36,7 @@ class ProductoType extends AbstractType
                 }
                 ))
         ;
+        $builder->addEventSubscriber(new AddFieldsProductoSubscriber($builder->getFormFactory()));
     }
     
     /**
