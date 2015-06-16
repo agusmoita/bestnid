@@ -24,9 +24,6 @@ class ProductoType extends AbstractType
             ->add('vencimiento', null, array(
                 'attr' => array('min' => 15, 'max' => 30)
                 ))
-            /*->add('foto','file', array(
-                'label' => 'Foto'
-            ))*/
             ->add('categoria', null, array(
                 'empty_value' => '--Seleccione--',
                 'required' => true,
