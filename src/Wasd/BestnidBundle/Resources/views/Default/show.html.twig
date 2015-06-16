@@ -27,13 +27,51 @@
                     <a href="{{ path('producto_edit', {'id': entity.id}) }}" class="btn btn-danger">Modificar</a>
                 </div>
             </div>
+            <br>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table data-toggle="table" data-classes="table table-striped" data-sort-name="fecha" data-pagination="true">
+                            <thead>
+                                <tr>
+                                    <th data-field="fecha" data-align="center" data-sortable="true">Fecha</th>
+                                    <th data-align="center">Necesidad</th>
+                                    <th data-align="center"> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for oferta in ofertas %}
+                                <tr>
+                                    <td>{{ oferta.fecha|date('d/m/Y') }}</td>
+                                    <td>{{ oferta.necesidad }}</td>
+                                    <td>
+                                        <a class="btn btn-danger" href="#">
+                                            Seleccionar
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr class="danger">
+                                    <td colspan="6">
+                                        No hay ofertas.
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
 
         {% else %}
+            <br>
             <br>
             <form action="{{ path('oferta_create') }}" method="post" {{ form_enctype(oferta_form) }} id="form" role="form">
                 
                 <div class="row">
-                    <div class="form-group col-md-3 col-md-offset-1">              
+                    <div class="form-group col-md-3">              
                         <div class="input-group col-md-12">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
                             {{ form_widget(oferta_form.monto, { 'attr': {'class': 'form-control', 'placeholder': 'Monto'} }) }} 
@@ -51,6 +89,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-danger">Ofertar</button>                        
+                    </div>
+                </div>
+                {{ form_rest(oferta_form) }}
                 
             </form>
 

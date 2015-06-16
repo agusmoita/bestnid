@@ -15,7 +15,8 @@ class OfertaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('monto', 'number')
+            ->add('monto', 'integer',array(
+                'attr'=>array('min'=>1)))
             ->add('necesidad')
         ;
     }

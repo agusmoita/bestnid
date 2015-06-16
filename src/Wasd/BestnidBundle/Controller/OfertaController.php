@@ -50,10 +50,21 @@ class OfertaController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $session = $this->getRequest()->getSession();
+
+            $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
+            $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($session->get('id_producto'));
+
+            $entity->setFecha(new \DateTime());
+            $entity->setUsuario($usuario);
+            $entity->setProducto($producto);
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('oferta_show', array('id' => $entity->getId())));
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+                    'Oferta realizada con éxito.');
+            return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
         }
 
         return array(

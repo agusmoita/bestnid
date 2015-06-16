@@ -44,6 +44,9 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to find Producto entity.');
         }
 
+        $session = $this->getRequest()->getSession();
+        $session->set('id_producto', $entity->getId());
+
         if ($this->getUser() == null){
             return array(
                 'entity'      => $entity,
