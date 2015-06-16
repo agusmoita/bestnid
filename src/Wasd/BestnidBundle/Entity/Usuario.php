@@ -103,6 +103,11 @@ class Usuario implements UserInterface
     private $productos;
 
     /**
+     * @ORM\OneToMany(targetEntity="Wasd\BestnidBundle\Entity\Oferta", mappedBy="usuario")
+     */
+     private $ofertas;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -397,5 +402,38 @@ class Usuario implements UserInterface
 
     public function __toString(){
         return $this->getUserName();
+    }
+
+    /**
+     * Add ofertas
+     *
+     * @param \Wasd\BestnidBundle\Entity\Oferta $ofertas
+     * @return Usuario
+     */
+    public function addOferta(\Wasd\BestnidBundle\Entity\Oferta $ofertas)
+    {
+        $this->ofertas[] = $ofertas;
+
+        return $this;
+    }
+
+    /**
+     * Remove ofertas
+     *
+     * @param \Wasd\BestnidBundle\Entity\Oferta $ofertas
+     */
+    public function removeOferta(\Wasd\BestnidBundle\Entity\Oferta $ofertas)
+    {
+        $this->ofertas->removeElement($ofertas);
+    }
+
+    /**
+     * Get ofertas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOfertas()
+    {
+        return $this->ofertas;
     }
 }

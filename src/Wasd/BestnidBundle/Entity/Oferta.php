@@ -43,13 +43,13 @@ class Oferta
     private $fecha;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Usuario")
+     * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Usuario", inversedBy="ofertas")
      * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
      */
      private $usuario;
 
      /**
-      * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Producto")
+      * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Producto", inversedBy="ofertas")
       * @ORM\JoinColumn(name="producto", referencedColumnName="id")
       */
       private $producto;
