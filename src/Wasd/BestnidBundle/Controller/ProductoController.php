@@ -242,4 +242,24 @@ class ProductoController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * @Route("/{id}/{oi}/seleccionar_oferta", name="seleccionar_oferta")
+     */
+    public function seleccionarAction($id, $oi)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($id);
+        $oferta = $em->getRepository('WasdBestnidBundle:Oferta')->find($oi);
+
+        //validar fecha fin de producto antes del persist
+
+        $producto->setOfertaGanadora($oferta);
+
+        $em->persist($producto);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+    }
 }

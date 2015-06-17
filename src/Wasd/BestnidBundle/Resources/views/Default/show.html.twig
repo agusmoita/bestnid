@@ -46,7 +46,7 @@
                                     <td>{{ oferta.fecha|date('d/m/Y') }}</td>
                                     <td>{{ oferta.necesidad }}</td>
                                     <td>
-                                        <a class="btn btn-danger" href="#">
+                                        <a class="btn btn-danger" href="{{ path('seleccionar_oferta', { 'id': entity.id , 'oi': oferta.id }) }}">
                                             Seleccionar
                                         </a>
                                     </td>

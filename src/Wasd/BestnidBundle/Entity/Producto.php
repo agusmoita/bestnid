@@ -97,6 +97,12 @@ class Producto
      */
      private $ofertas;
 
+     /**
+      * @ORM\OneToOne(targetEntity="Wasd\BestnidBundle\Entity\Oferta")
+      * @ORM\JoinColumn(name="oferta_ganadora", referencedColumnName="id")
+      */
+      private $oferta_ganadora;
+
 
     /**
      * Get id
@@ -371,5 +377,28 @@ class Producto
     public function getOfertas()
     {
         return $this->ofertas;
+    }
+
+    /**
+     * Set oferta_ganadora
+     *
+     * @param \Wasd\BestnidBundle\Entity\Oferta $ofertaGanadora
+     * @return Producto
+     */
+    public function setOfertaGanadora(\Wasd\BestnidBundle\Entity\Oferta $ofertaGanadora = null)
+    {
+        $this->oferta_ganadora = $ofertaGanadora;
+
+        return $this;
+    }
+
+    /**
+     * Get oferta_ganadora
+     *
+     * @return \Wasd\BestnidBundle\Entity\Oferta 
+     */
+    public function getOfertaGanadora()
+    {
+        return $this->oferta_ganadora;
     }
 }
