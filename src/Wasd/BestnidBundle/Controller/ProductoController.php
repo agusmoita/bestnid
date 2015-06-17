@@ -260,6 +260,8 @@ class ProductoController extends Controller
         $em->persist($producto);
         $em->flush();
 
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+                    'Oferta seleccionada con éxito.');
         return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
     }
 }
