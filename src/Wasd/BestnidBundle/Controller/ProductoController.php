@@ -123,7 +123,8 @@ class ProductoController extends Controller
             return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
         }
 
-        if (count($entity->getOfertas()) > 0 ){
+        $hoy = new \DateTime();
+        if ((count($entity->getOfertas()) > 0) || ($entity->getFechaFin() < $hoy) ){
             $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
                     'No puedes modificar este producto.');
             return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
