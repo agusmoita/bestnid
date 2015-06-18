@@ -55,6 +55,13 @@ class OfertaController extends Controller
             $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
             $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($session->get('id_producto'));
 
+            $hoy = new \DateTime();
+            if ($producto->getFechaFin() < $hoy){
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                        'No se pueden realizar más ofertas.');
+                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));            
+            }
+
             $entity->setFecha(new \DateTime());
             $entity->setUsuario($usuario);
             $entity->setProducto($producto);
@@ -67,10 +74,7 @@ class OfertaController extends Controller
             return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
     }
 
     /**
