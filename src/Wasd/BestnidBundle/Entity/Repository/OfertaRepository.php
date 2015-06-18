@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class OfertaRepository extends EntityRepository
 {
+	public function findUsuarioRepetido($producto, $usuario){
+		$em = $this->getEntityManager();
+		$consulta = $em->createQuery('
+			SELECT o FROM WasdBestnidBundle:Oferta o
+			WHERE o.producto = :producto
+			AND o.usuario = :usuario'
+			);
+		$consulta->setParameter('producto', $producto);
+		$consulta->setParameter('usuario', $usuario);
+
+		$consulta->setMaxResults(1);
+
+		return $consulta->getResult();
+	}
 }

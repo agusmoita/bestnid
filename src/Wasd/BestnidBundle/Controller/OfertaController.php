@@ -55,6 +55,14 @@ class OfertaController extends Controller
             $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
             $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($session->get('id_producto'));
 
+            $validUser = $em->getRepository('WasdBestnidBundle:Oferta')->findUsuarioRepetido($producto, $usuario);
+
+            if ($validUser){
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                        'Ya has realizado una oferta por este producto.');
+                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));
+            }
+
             $hoy = new \DateTime();
             if ($producto->getFechaFin() < $hoy){
                 $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 

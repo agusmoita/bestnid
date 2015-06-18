@@ -120,8 +120,13 @@ class ProductoController extends Controller
 
             $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
                     'No puedes modificar este producto.');
-                $session = $this->getRequest()->getSession();
-                return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+            return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+        }
+
+        if (count($entity->getOfertas()) > 0 ){
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                    'No puedes modificar este producto.');
+            return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
         }
 
 
