@@ -97,33 +97,37 @@
         {% else %}
             <br>
             <br>
-            <form action="{{ path('oferta_create') }}" method="post" {{ form_enctype(oferta_form) }} id="form" role="form">
-                
-                <div class="row">
-                    <div class="form-group col-md-3">              
-                        <div class="input-group col-md-12">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-                            {{ form_widget(oferta_form.monto, { 'attr': {'class': 'form-control', 'placeholder': 'Monto'} }) }} 
+            {% if not entity.ofertaganadora %}
+                <form action="{{ path('oferta_create') }}" method="post" {{ form_enctype(oferta_form) }} id="form" role="form">
+                    
+                    <div class="row">
+                        <div class="form-group col-md-3">              
+                            <div class="input-group col-md-12">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                {{ form_widget(oferta_form.monto, { 'attr': {'class': 'form-control', 'placeholder': 'Monto'} }) }} 
+                            </div>
+                            <div class="text-danger">
+                                {{ form_errors(oferta_form.monto) }}
+                            </div>
                         </div>
-                        <div class="text-danger">
-                            {{ form_errors(oferta_form.monto) }}
+                        <div class="form-group col-md-6">              
+                            <div class="input-group col-md-12">
+                                {{ form_widget(oferta_form.necesidad, { 'attr': {'class': 'form-control', 'placeholder': 'Necesidad'} }) }}
+                            </div>
+                            <div class="text-danger">
+                                {{ form_errors(oferta_form.necesidad) }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-danger">Ofertar</button>                        
                         </div>
                     </div>
-                    <div class="form-group col-md-6">              
-                        <div class="input-group col-md-12">
-                            {{ form_widget(oferta_form.necesidad, { 'attr': {'class': 'form-control', 'placeholder': 'Necesidad'} }) }}
-                        </div>
-                        <div class="text-danger">
-                            {{ form_errors(oferta_form.necesidad) }}
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-danger">Ofertar</button>                        
-                    </div>
-                </div>
-                {{ form_rest(oferta_form) }}
-                
-            </form>
+                    {{ form_rest(oferta_form) }}
+                    
+                </form>
+            {% else %}
+                <h2>Subasta finalizada</h2>
+            {% endif %}
 
         {% endif %}
 
