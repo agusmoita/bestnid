@@ -271,20 +271,38 @@ class ProductoController extends Controller
         $em->persist($producto);
         $em->flush();
 
-        $this->enviarMail();
+        $titulo = $producto->getTitulo();
+        $nombre = $oferta->getUsuario()->getNombre();
+        $telefono = $producto->getUsuario()->getTelefono();
+        $destino = $oferta->getUsuario()->getEmail();
+        $this->enviarMail($titulo, $nombre, $telefono, $destino);
 
         $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
                     'Oferta seleccionada con éxito.');
         return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
     }
 
-    public function enviarMail()
+    public function enviarMail($titulo, $nombre, $telefono, $destino)
     {
+
+        $template = 'WasdBestnidBundle:Mail:notificacion.html.twig';
+        $args = array(
+            'titulo' => $titulo,
+            'nombre' => $nombre,
+            'telefono' => $telefono
+            );
+
         $message = \Swift_Message::newInstance()
-            ->setSubject("Prueba")
-            ->setFrom(array('wasdinc@gmail.com' => 'Equipo Técnico de Bestnid'))
-            ->setTo(array('a94moita@outlook.com'))
-            ->setBody('Texto de prueba djfds');
+            ->setSubject("Has ganado una subasta")
+            ->setFrom(array('wasdinc@gmail.com' => 'Bestnid'))
+            ->setTo(array($destino))
+            ->setBody(
+                $this->renderView(
+                    $template, 
+                    $args
+                ), 
+                'text/html'
+            );
 
         try {
             $this->get('mailer')->send($message);
