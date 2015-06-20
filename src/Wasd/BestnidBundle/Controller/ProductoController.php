@@ -259,12 +259,12 @@ class ProductoController extends Controller
         $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($id);
         $oferta = $em->getRepository('WasdBestnidBundle:Oferta')->find($oi);
 
-        /*$hoy = new \DateTime();
+        $hoy = new \DateTime();
         if ($producto->getFechaFin() > $hoy){
             $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
                     'Todavía no puedes elegir un ganador.');
             return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));            
-        }*/
+        }
 
         $producto->setOfertaGanadora($oferta);
 
