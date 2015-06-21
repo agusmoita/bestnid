@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\SecurityContext;
+use Wasd\BestnidBundle\Entity\Oferta;
+use Wasd\BestnidBundle\Form\OfertaType;
 
 class DefaultController extends Controller
 {
@@ -42,11 +44,28 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to find Producto entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        $session = $this->getRequest()->getSession();
+        $session->set('id_producto', $entity->getId());
+
+        if ($this->getUser() == null){
+            return array(
+                'entity'      => $entity,
+            );
+        }
+
+        if ($this->getUser()->getId() == $entity->getUsuario()->getId()){
+            return array(
+                'entity'      => $entity,
+                'ofertas'     => $entity->getOfertas(),
+            );
+        }
+
+        $oferta = new Oferta();
+        $oferta_form = $this->createForm(new OfertaType(), $oferta);
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'oferta_form' => $oferta_form->createView(),
         );
     }
 

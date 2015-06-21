@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block contenido %}
+
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+            <p><a href="{{ path('default') }}" class="btn btn-default"><< Volver</a></p>            
+        </div>
+    </div>
     
     <div class="row">
 
@@ -17,5 +23,120 @@
         </div>
 
     </div>
+
+    {% if app.user %}
+        
+        {% if app.user.id == entity.usuario.id %}
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="{{ path('producto_edit', {'id': entity.id}) }}" class="btn btn-success">Modificar</a>
+                </div>
+            </div>
+            <br>
+
+            {% if not entity.ofertaganadora %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table data-toggle="table" data-classes="table table-striped" data-sort-name="fecha" data-pagination="true">
+                                <thead>
+                                    <tr>
+                                        <th data-field="fecha" data-align="center" data-sortable="true">Fecha</th>
+                                        <th data-align="center">Necesidad</th>
+                                        <th data-align="center"> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for oferta in ofertas %}
+                                    <tr>
+                                        <td>{{ oferta.fecha|date('d/m/Y') }}</td>
+                                        <td>{{ oferta.necesidad }}</td>
+                                        <td>
+                                            <a class="btn btn-success" href="{{ path('seleccionar_oferta', { 'id': entity.id , 'oi': oferta.id }) }}">
+                                                Seleccionar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr class="danger">
+                                        <td colspan="6">
+                                            No hay ofertas.
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <h2>Oferta Ganadora</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table data-toggle="table" data-classes="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Usuario</th>
+                                        <th>Monto</th>
+                                        <th>Necesidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ entity.ofertaganadora.fecha|date('d/m/Y') }}</td>
+                                        <td>{{ entity.ofertaganadora.usuario }}</td>
+                                        <td>${{ entity.ofertaganadora.monto }}</td>
+                                        <td>{{ entity.ofertaganadora.necesidad }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+
+
+        {% else %}
+            <br>
+            <br>
+            {% if not entity.ofertaganadora %}
+                <form action="{{ path('oferta_create') }}" method="post" {{ form_enctype(oferta_form) }} id="form" role="form">
+                    
+                    <div class="row">
+                        <div class="form-group col-md-3">              
+                            <div class="input-group col-md-12">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                {{ form_widget(oferta_form.monto, { 'attr': {'class': 'form-control', 'placeholder': 'Monto'} }) }} 
+                            </div>
+                            <div class="text-danger">
+                                {{ form_errors(oferta_form.monto) }}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">              
+                            <div class="input-group col-md-12">
+                                {{ form_widget(oferta_form.necesidad, { 'attr': {'class': 'form-control', 'placeholder': 'Necesidad'} }) }}
+                            </div>
+                            <div class="text-danger">
+                                {{ form_errors(oferta_form.necesidad) }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success">Ofertar</button>                        
+                        </div>
+                    </div>
+                    {{ form_rest(oferta_form) }}
+                    
+                </form>
+            {% else %}
+                <h2>Subasta finalizada</h2>
+            {% endif %}
+
+        {% endif %}
+
+    {% endif %}
 
 {% endblock %}

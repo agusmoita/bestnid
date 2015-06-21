@@ -84,13 +84,24 @@ class Producto
      * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Categoria")
      * @ORM\JoinColumn(name="categoria", referencedColumnName="id")
      */
-     private $categoria;
+    private $categoria;
 
      /**
       * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Usuario", inversedBy="productos")
       * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
       */
-      private $usuario;
+    private $usuario;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Wasd\BestnidBundle\Entity\Oferta", mappedBy="producto")
+     */
+     private $ofertas;
+
+     /**
+      * @ORM\OneToOne(targetEntity="Wasd\BestnidBundle\Entity\Oferta")
+      * @ORM\JoinColumn(name="oferta_ganadora", referencedColumnName="id")
+      */
+      private $oferta_ganadora;
 
 
     /**
@@ -326,5 +337,68 @@ class Producto
     public function getUsuario()
     {
         return $this->usuario;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ofertas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ofertas
+     *
+     * @param \Wasd\BestnidBundle\Entity\Oferta $ofertas
+     * @return Producto
+     */
+    public function addOferta(\Wasd\BestnidBundle\Entity\Oferta $ofertas)
+    {
+        $this->ofertas[] = $ofertas;
+
+        return $this;
+    }
+
+    /**
+     * Remove ofertas
+     *
+     * @param \Wasd\BestnidBundle\Entity\Oferta $ofertas
+     */
+    public function removeOferta(\Wasd\BestnidBundle\Entity\Oferta $ofertas)
+    {
+        $this->ofertas->removeElement($ofertas);
+    }
+
+    /**
+     * Get ofertas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOfertas()
+    {
+        return $this->ofertas;
+    }
+
+    /**
+     * Set oferta_ganadora
+     *
+     * @param \Wasd\BestnidBundle\Entity\Oferta $ofertaGanadora
+     * @return Producto
+     */
+    public function setOfertaGanadora(\Wasd\BestnidBundle\Entity\Oferta $ofertaGanadora = null)
+    {
+        $this->oferta_ganadora = $ofertaGanadora;
+
+        return $this;
+    }
+
+    /**
+     * Get oferta_ganadora
+     *
+     * @return \Wasd\BestnidBundle\Entity\Oferta 
+     */
+    public function getOfertaGanadora()
+    {
+        return $this->oferta_ganadora;
     }
 }

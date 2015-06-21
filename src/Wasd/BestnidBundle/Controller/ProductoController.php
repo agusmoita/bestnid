@@ -116,6 +116,21 @@ class ProductoController extends Controller
             throw $this->createNotFoundException('Unable to find Producto entity.');
         }
 
+        if ($this->getUser()->getId() != $entity->getUsuario()->getId()){
+
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                    'No puedes modificar este producto.');
+            return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+        }
+
+        $hoy = new \DateTime();
+        if ((count($entity->getOfertas()) > 0) || ($entity->getFechaFin() < $hoy) ){
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                    'No puedes modificar este producto.');
+            return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+        }
+
+
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -165,7 +180,21 @@ class ProductoController extends Controller
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
+        $rutaOriginal = $entity->getRutaFoto();
+
         if ($editForm->isValid()) {
+
+            $plazo = $editForm->getData()->getVencimiento();
+            $fechaAlta = $entity->getFechaAlta();
+            $fechaFin = $fechaAlta;
+            date_modify($fechaFin, "+".$plazo." days");
+
+            if ($editForm->getData()->getFoto() != null){
+                $entity->subirFoto($this->container->getParameter('bestnid.directorio.imagenes'));
+            }
+
+            $entity->setFechaFin($fechaFin);
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('producto_show', array('id' => $id)));
@@ -180,8 +209,8 @@ class ProductoController extends Controller
     /**
      * Deletes a Producto entity.
      *
-     * @Route("/{id}", name="producto_delete")
-     * @Method("POST")
+     * @Route("/{id}/delete", name="producto_delete")
+     * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -214,9 +243,75 @@ class ProductoController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('producto_delete', array('id' => $id)))
-            ->setMethod('POST')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Eliminar'))
             ->getForm()
         ;
+    }
+
+    /**
+     * @Route("/{id}/{oi}/seleccionar_oferta", name="seleccionar_oferta")
+     */
+    public function seleccionarAction($id, $oi)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($id);
+        $oferta = $em->getRepository('WasdBestnidBundle:Oferta')->find($oi);
+
+        $hoy = new \DateTime();
+        if ($producto->getFechaFin() > $hoy){
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                    'Todavía no puedes elegir un ganador.');
+            return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));            
+        }
+
+        $producto->setOfertaGanadora($oferta);
+
+        $em->persist($producto);
+        $em->flush();
+
+        $titulo = $producto->getTitulo();
+        $nombre = $oferta->getUsuario()->getNombre();
+        $telefono = $producto->getUsuario()->getTelefono();
+        $destino = $oferta->getUsuario()->getEmail();
+        $this->enviarMail($titulo, $nombre, $telefono, $destino);
+
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+                    'Oferta seleccionada con éxito.');
+        return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+    }
+
+    public function enviarMail($titulo, $nombre, $telefono, $destino)
+    {
+
+        $template = 'WasdBestnidBundle:Mail:notificacion.html.twig';
+        $args = array(
+            'titulo' => $titulo,
+            'nombre' => $nombre,
+            'telefono' => $telefono
+            );
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject("Has ganado una subasta")
+            ->setFrom(array('wasdinc@gmail.com' => 'Bestnid'))
+            ->setTo(array($destino))
+            ->setBody(
+                $this->renderView(
+                    $template, 
+                    $args
+                ), 
+                'text/html'
+            );
+
+        try {
+            $this->get('mailer')->send($message);
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+                    'Notificación enviada.');
+        } catch (\Exception $e) {
+             $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                    'No se pudo enviar el mail.');
+        }
+        
     }
 }

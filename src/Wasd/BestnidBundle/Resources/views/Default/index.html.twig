@@ -21,9 +21,16 @@
                         <td>{{ entity.fechafin|date('d/m/Y') }}</td>
                         <td>{{ entity.categoria }}</td>
                         <td>
-                            <a  class="ver" href="{{ path('producto_show', { 'id': entity.id }) }}">
+                            <a class="ver" href="{{ path('producto_show', { 'id': entity.id }) }}">
                                 <i class="glyphicon glyphicon-eye-open"></i>
                             </a>
+                            {% if app.user %}
+                                {% if app.user.id == entity.usuario.id %}
+                                    <a class="modificar" style="margin-left: 5px;" href="{{ path('producto_edit', {'id': entity.id}) }}">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
                         </td>
                     </tr>
                 {% else %}

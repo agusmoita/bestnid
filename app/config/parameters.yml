@@ -12,3 +12,8 @@ parameters:
     locale: es
     secret: 85db95fc9bcbeeb98e34e24fb409fe83
     database_path: null
+
+    mailer_transport: gmail
+    mailer_host:      ~
+    mailer_user:  wasdinc
+    mailer_password:  wasdbestnid
