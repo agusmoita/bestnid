@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <h1>Pregunta creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('pregunta') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
