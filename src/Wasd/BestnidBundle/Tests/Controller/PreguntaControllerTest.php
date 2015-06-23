@@ -4,7 +4,7 @@ namespace Wasd\BestnidBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class OfertaControllerTest extends WebTestCase
+class PreguntaControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class OfertaControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/oferta/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /oferta/");
+        $crawler = $client->request('GET', '/pregunta/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /pregunta/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'wasd_bestnidbundle_oferta[field_name]'  => 'Test',
+            'wasd_bestnidbundle_pregunta[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class OfertaControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Update')->form(array(
-            'wasd_bestnidbundle_oferta[field_name]'  => 'Foo',
+            'wasd_bestnidbundle_pregunta[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

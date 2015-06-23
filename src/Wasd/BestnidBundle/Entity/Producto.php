@@ -103,6 +103,11 @@ class Producto
       */
       private $oferta_ganadora;
 
+      /**
+      * @ORM\OneToMany(targetEntity="Wasd\BestnidBundle\Entity\Pregunta", mappedBy="producto")
+      */
+      private $preguntas;
+
 
     /**
      * Get id
@@ -344,6 +349,7 @@ class Producto
     public function __construct()
     {
         $this->ofertas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -388,7 +394,18 @@ class Producto
     public function setOfertaGanadora(\Wasd\BestnidBundle\Entity\Oferta $ofertaGanadora = null)
     {
         $this->oferta_ganadora = $ofertaGanadora;
+        return $this;
+    }
 
+    /**
+     * Add preguntas
+     *
+     * @param \Wasd\BestnidBundle\Entity\Pregunta $preguntas
+     * @return Producto
+     */
+    public function addPregunta(\Wasd\BestnidBundle\Entity\Pregunta $preguntas)
+    {
+        $this->preguntas[] = $preguntas;
         return $this;
     }
 
@@ -400,5 +417,25 @@ class Producto
     public function getOfertaGanadora()
     {
         return $this->oferta_ganadora;
+    }
+
+    /**
+     * Remove preguntas
+     *
+     * @param \Wasd\BestnidBundle\Entity\Pregunta $preguntas
+     */
+    public function removePregunta(\Wasd\BestnidBundle\Entity\Pregunta $preguntas)
+    {
+        $this->preguntas->removeElement($preguntas);
+    }
+
+    /**
+     * Get preguntas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreguntas()
+    {
+        return $this->preguntas;
     }
 }

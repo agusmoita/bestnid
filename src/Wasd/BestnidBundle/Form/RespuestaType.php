@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OfertaType extends AbstractType
+class RespuestaType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,9 +15,9 @@ class OfertaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('monto', 'integer',array(
-                'attr'=>array('min'=>1)))
-            ->add('necesidad')
+            ->add('descripcion')
+            ->add('fecha')
+            ->add('idPregunta')
         ;
     }
     
@@ -27,7 +27,7 @@ class OfertaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wasd\BestnidBundle\Entity\Oferta'
+            'data_class' => 'Wasd\BestnidBundle\Entity\Respuesta'
         ));
     }
 
@@ -36,6 +36,6 @@ class OfertaType extends AbstractType
      */
     public function getName()
     {
-        return 'wasd_bestnidbundle_oferta';
+        return 'wasd_bestnidbundle_respuesta';
     }
 }

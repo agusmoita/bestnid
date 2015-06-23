@@ -9,6 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\SecurityContext;
 use Wasd\BestnidBundle\Entity\Oferta;
 use Wasd\BestnidBundle\Form\OfertaType;
+use Wasd\BestnidBundle\Entity\Pregunta;
+use Wasd\BestnidBundle\Form\PreguntaType;
+use Wasd\BestnidBundle\Entity\Respuesta;
+use Wasd\BestnidBundle\Form\RespuestaType;
+
 
 class DefaultController extends Controller
 {
@@ -50,6 +55,7 @@ class DefaultController extends Controller
         if ($this->getUser() == null){
             return array(
                 'entity'      => $entity,
+                'preguntas' =>$entity->getPreguntas()
             );
         }
 
@@ -57,15 +63,19 @@ class DefaultController extends Controller
             return array(
                 'entity'      => $entity,
                 'ofertas'     => $entity->getOfertas(),
+                'preguntas' =>$entity->getPreguntas()
             );
         }
 
         $oferta = new Oferta();
         $oferta_form = $this->createForm(new OfertaType(), $oferta);
-
+        $pregunta = new Pregunta();
+        $pregunta_form = $this->createForm(new PreguntaType(),$pregunta);
         return array(
             'entity'      => $entity,
+            'preguntas' =>$entity->getPreguntas(),
             'oferta_form' => $oferta_form->createView(),
+            'pregunta_form' => $pregunta_form->createView(),
         );
     }
 
