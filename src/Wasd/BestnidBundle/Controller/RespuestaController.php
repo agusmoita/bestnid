@@ -45,15 +45,24 @@ class RespuestaController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Respuesta();
-        $form = $this->createCreateForm($entity);
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new RespuestaType(), $entity, array(
+            'em' => $em,
+        ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+
+            $pregunta = $entity->getPregunta();
+
+            $entity->setFecha(new \DateTime());
+            $pregunta->setRespuesta($entity);
+
+            $em->persist($pregunta);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('respuesta_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('producto_show', array('id' => $pregunta->getProducto()->getId())));
         }
 
         return array(

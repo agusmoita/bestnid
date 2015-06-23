@@ -5,6 +5,7 @@ namespace Wasd\BestnidBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Wasd\BestnidBundle\Form\DataTransformer\EntityToIntTransformer;
 
 class RespuestaType extends AbstractType
 {
@@ -14,10 +15,17 @@ class RespuestaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $PreguntaToIntTransformer = new EntityToIntTransformer($options["em"]);
+        $PreguntaToIntTransformer->setEntityClass(
+                "Wasd\BestnidBundle\Entity\Pregunta");
+        $PreguntaToIntTransformer->setEntityRepository(
+                "WasdBestnidBundle:Pregunta");
+        $PreguntaToIntTransformer->setEntityType("Pregunta");
+
         $builder
             ->add('descripcion')
-            ->add('fecha')
-            ->add('idPregunta')
+            ->add($builder->create('pregunta', 'hidden')
+                    ->addModelTransformer($PreguntaToIntTransformer))
         ;
     }
     
@@ -28,6 +36,12 @@ class RespuestaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Wasd\BestnidBundle\Entity\Respuesta'
+        ));
+        $resolver->setRequired(array(
+            'em',
+        ));
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager',
         ));
     }
 

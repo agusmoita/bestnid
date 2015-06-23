@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Pregunta
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\Repository\PreguntaRepository")
  */
 class Pregunta
 {
@@ -32,6 +32,12 @@ class Pregunta
      * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
      */
      private $usuario;
+
+     /**
+     * @ORM\OneToOne(targetEntity="Wasd\BestnidBundle\Entity\Respuesta")
+     * @ORM\JoinColumn(name="respuesta", referencedColumnName="id")
+     */
+     private $respuesta;
 
     /**
      * @var \DateTime
@@ -178,5 +184,28 @@ class Pregunta
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set respuesta
+     *
+     * @param \Wasd\BestnidBundle\Entity\Respuesta $respuesta
+     * @return Pregunta
+     */
+    public function setRespuesta(\Wasd\BestnidBundle\Entity\Respuesta $respuesta = null)
+    {
+        $this->respuesta = $respuesta;
+    
+        return $this;
+    }
+
+    /**
+     * Get respuesta
+     *
+     * @return \Wasd\BestnidBundle\Entity\Respuesta 
+     */
+    public function getRespuesta()
+    {
+        return $this->respuesta;
     }
 }

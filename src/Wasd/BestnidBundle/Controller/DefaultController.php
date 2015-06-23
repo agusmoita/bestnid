@@ -60,10 +60,19 @@ class DefaultController extends Controller
         }
 
         if ($this->getUser()->getId() == $entity->getUsuario()->getId()){
+
+            $forms_res = array();
+            foreach ($entity->getPreguntas() as $p) {
+                $res = new Respuesta();
+                $f = $this->createForm(new RespuestaType(), $res, array('em' => $em))->createView();
+                $forms_res[] = $f;
+            }
+
             return array(
-                'entity'      => $entity,
-                'ofertas'     => $entity->getOfertas(),
-                'preguntas' =>$entity->getPreguntas()
+                'entity'    => $entity,
+                'ofertas'   => $entity->getOfertas(),
+                'preguntas' => $entity->getPreguntas(),
+                'formularios' => $forms_res
             );
         }
 

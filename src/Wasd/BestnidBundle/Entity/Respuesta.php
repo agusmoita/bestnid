@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Respuesta
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\RespuestaRepository")
+ * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\Repository\RespuestaRepository")
  */
 class Respuesta
 {
@@ -36,12 +36,10 @@ class Respuesta
     private $fecha;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idPregunta", type="integer")
+     * @ORM\OneToOne(targetEntity="Wasd\BestnidBundle\Entity\Pregunta")
+     * @ORM\JoinColumn(name="pregunta", referencedColumnName="id")
      */
-    private $idPregunta;
-
+     private $pregunta;
 
     /**
      * Get id
@@ -100,25 +98,29 @@ class Respuesta
     }
 
     /**
-     * Set idPregunta
+     * Set pregunta
      *
-     * @param integer $idPregunta
+     * @param \Wasd\BestnidBundle\Entity\Pregunta $pregunta
      * @return Respuesta
      */
-    public function setIdPregunta($idPregunta)
+    public function setPregunta(\Wasd\BestnidBundle\Entity\Pregunta $pregunta = null)
     {
-        $this->idPregunta = $idPregunta;
-
+        $this->pregunta = $pregunta;
+    
         return $this;
     }
 
     /**
-     * Get idPregunta
+     * Get pregunta
      *
-     * @return integer 
+     * @return \Wasd\BestnidBundle\Entity\Pregunta 
      */
-    public function getIdPregunta()
+    public function getPregunta()
     {
-        return $this->idPregunta;
+        return $this->pregunta;
+    }
+
+    public function __toString(){
+        return $this->getDescripcion();
     }
 }

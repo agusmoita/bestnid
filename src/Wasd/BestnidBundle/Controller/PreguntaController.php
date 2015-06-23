@@ -51,16 +51,19 @@ class PreguntaController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $session = $this->getRequest()->getSession();
-            $producto = $em->getRepository('WasdBestnidBundle:Producto')->find(1);
+
+            $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($session->get('id_producto'));
             $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
+
             $entity->setProducto($producto);
             $entity->setUsuario($usuario);
             $entity->setFecha(new \DateTime());
             $entity->setStatus(true);
+            
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('producto_show', array('id' => 1)));
+            return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
         }
 
         return array(
