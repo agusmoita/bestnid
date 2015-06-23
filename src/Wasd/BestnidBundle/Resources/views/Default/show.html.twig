@@ -134,9 +134,84 @@
             {% else %}
                 <h2>Subasta finalizada</h2>
             {% endif %}
-
+            
         {% endif %}
-
     {% endif %}
+    <br>
+    <br>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Preguntas</h3>
+        </div>
+        <div class="panel-body">
+             
+            {% set i = 0 %}  
+            {% for pregunta in preguntas %}
+                <dl>
+                    <dt>
+                        <span class="glyphicon glyphicon-user"><strong> -{{ pregunta.descripcion }}</strong></span><br /><br />                     
+                    </dt>
+                    {% if pregunta.respuesta %}
+                        <dd>
+                            <span>- {{ pregunta.respuesta }}</span>
+                        </dd>
+                    {% else %}
+
+                        {% if app.user %}
+                            {% if app.user.id == entity.usuario.id %}
+                                <div class="row">
+                                    <form action="{{ path('respuesta_create') }}" method="post" {{ form_enctype(formularios[i]) }} id="resform_{{ pregunta.id }}" role="form" >
+                                        <div class="form-group col-md-11">
+                                            <div class="input-group col-md-12">
+                                                {{ form_widget(formularios[i].descripcion , {'attr': { 'class': 'form-control', 'placeholder': 'Respuesta:'}}) }}        
+                                            </div>
+
+                                        </div>
+
+                                        {{ form_row(formularios[i].pregunta, {'value': pregunta.id}) }}
+                                        <div class="form-group col-md-1">
+                                            <div class="input-group col-md-12">
+                                                <button type="submit" class="btn btn-primary">Responder</button>
+                                            </div>
+                                        </div>        
+                                        {{ form_rest(formularios[i]) }}           
+                                    </form>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endif %}
+                </dl>
+                {% set i = i + 1 %}
+                <hr>
+            {% else %}
+                <h3>No hay ninguna pregunta</h3>     
+            {% endfor %}  
+            <br /><br />                      
+        </div>
+    </div>  
+
+    {% if app.user %}
+        {% if app.user.id != entity.usuario.id %}
+            <div class="row">
+                <form action="{{ path('pregunta_create') }}" method="post" {{ form_enctype(pregunta_form) }} role="form" >
+                    <div class="form-group col-md-11">
+                        <div class="input-group col-md-12">
+                            
+                            {{ form_widget(pregunta_form.descripcion , {'attr': { 'class': 'form-control', 'placeholder': 'Has una pregunta!'}}) }}        
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-1">
+                        
+                        <div class="input-group col-md-12">
+                            <button type="submit" class="btn btn-primary" >ENVIAR</button>
+                        </div>
+                    </div>        
+                    {{ form_rest(pregunta_form) }}           
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}    
 
 {% endblock %}

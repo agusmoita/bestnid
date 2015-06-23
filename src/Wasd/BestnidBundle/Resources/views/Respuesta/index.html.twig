@@ -1,32 +1,32 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Oferta list</h1>
+    <h1>Respuesta list</h1>
 
     <table class="records_list">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Monto</th>
-                <th>Necesidad</th>
+                <th>Descripcion</th>
                 <th>Fecha</th>
+                <th>Idpregunta</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('oferta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.monto }}</td>
-                <td>{{ entity.necesidad }}</td>
+                <td><a href="{{ path('respuesta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.descripcion }}</td>
                 <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.idPregunta }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('oferta_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('respuesta_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('oferta_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('respuesta_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -37,7 +37,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('oferta_new') }}">
+            <a href="{{ path('respuesta_new') }}">
                 Create a new entry
             </a>
         </li>

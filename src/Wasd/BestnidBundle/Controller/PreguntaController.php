@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Wasd\BestnidBundle\Entity\Oferta;
-use Wasd\BestnidBundle\Form\OfertaType;
+use Wasd\BestnidBundle\Entity\Pregunta;
+use Wasd\BestnidBundle\Form\PreguntaType;
 
 /**
- * Oferta controller.
+ * Pregunta controller.
  *
- * @Route("/oferta")
+ * @Route("/intranet/pregunta")
  */
-class OfertaController extends Controller
+class PreguntaController extends Controller
 {
 
     /**
-     * Lists all Oferta entities.
+     * Lists all Pregunta entities.
      *
-     * @Route("/", name="oferta")
+     * @Route("/", name="pregunta")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +29,22 @@ class OfertaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('WasdBestnidBundle:Oferta')->findAll();
+        $entities = $em->getRepository('WasdBestnidBundle:Pregunta')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new Oferta entity.
+     * Creates a new Pregunta entity.
      *
-     * @Route("/", name="oferta_create")
+     * @Route("/", name="pregunta_create")
      * @Method("POST")
-     * @Template("WasdBestnidBundle:Oferta:new.html.twig")
+     * @Template("WasdBestnidBundle:Pregunta:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Oferta();
+        $entity = new Pregunta();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -52,68 +52,55 @@ class OfertaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $session = $this->getRequest()->getSession();
 
-            $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
             $producto = $em->getRepository('WasdBestnidBundle:Producto')->find($session->get('id_producto'));
+            $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
 
-            $validUser = $em->getRepository('WasdBestnidBundle:Oferta')->findUsuarioRepetido($producto, $usuario);
-
-            if ($validUser){
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
-                        'Ya has realizado una oferta por este producto.');
-                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));
-            }
-
-            $hoy = new \DateTime();
-            if ($producto->getFechaFin() < $hoy){
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
-                        'No se pueden realizar más ofertas.');
-                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));            
-            }
-
-            $entity->setFecha(new \DateTime());
-            $entity->setUsuario($usuario);
             $entity->setProducto($producto);
-
+            $entity->setUsuario($usuario);
+            $entity->setFecha(new \DateTime());
+            $entity->setStatus(true);
+            
             $em->persist($entity);
             $em->flush();
 
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
-                    'Oferta realizada con éxito.');
             return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
         }
 
-        return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
     }
 
     /**
-     * Creates a form to create a Oferta entity.
+     * Creates a form to create a Pregunta entity.
      *
-     * @param Oferta $entity The entity
+     * @param Pregunta $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Oferta $entity)
+    private function createCreateForm(Pregunta $entity)
     {
-        $form = $this->createForm(new OfertaType(), $entity, array(
-            'action' => $this->generateUrl('oferta_create'),
+        $form = $this->createForm(new PreguntaType(), $entity, array(
+            'action' => $this->generateUrl('pregunta_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Ofertar'));
+        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
 
     /**
-     * Displays a form to create a new Oferta entity.
+     * Displays a form to create a new Pregunta entity.
      *
-     * @Route("/new", name="oferta_new")
+     * @Route("/new", name="pregunta_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Oferta();
+        $entity = new Pregunta();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -123,9 +110,9 @@ class OfertaController extends Controller
     }
 
     /**
-     * Finds and displays a Oferta entity.
+     * Finds and displays a Pregunta entity.
      *
-     * @Route("/{id}", name="oferta_show")
+     * @Route("/{id}", name="pregunta_show")
      * @Method("GET")
      * @Template()
      */
@@ -133,10 +120,10 @@ class OfertaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:Oferta')->find($id);
+        $entity = $em->getRepository('WasdBestnidBundle:Pregunta')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Oferta entity.');
+            throw $this->createNotFoundException('Unable to find Pregunta entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -148,9 +135,9 @@ class OfertaController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Oferta entity.
+     * Displays a form to edit an existing Pregunta entity.
      *
-     * @Route("/{id}/edit", name="oferta_edit")
+     * @Route("/{id}/edit", name="pregunta_edit")
      * @Method("GET")
      * @Template()
      */
@@ -158,10 +145,10 @@ class OfertaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:Oferta')->find($id);
+        $entity = $em->getRepository('WasdBestnidBundle:Pregunta')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Oferta entity.');
+            throw $this->createNotFoundException('Unable to find Pregunta entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -175,16 +162,16 @@ class OfertaController extends Controller
     }
 
     /**
-    * Creates a form to edit a Oferta entity.
+    * Creates a form to edit a Pregunta entity.
     *
-    * @param Oferta $entity The entity
+    * @param Pregunta $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Oferta $entity)
+    private function createEditForm(Pregunta $entity)
     {
-        $form = $this->createForm(new OfertaType(), $entity, array(
-            'action' => $this->generateUrl('oferta_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new PreguntaType(), $entity, array(
+            'action' => $this->generateUrl('pregunta_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -193,20 +180,20 @@ class OfertaController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Oferta entity.
+     * Edits an existing Pregunta entity.
      *
-     * @Route("/{id}", name="oferta_update")
+     * @Route("/{id}", name="pregunta_update")
      * @Method("PUT")
-     * @Template("WasdBestnidBundle:Oferta:edit.html.twig")
+     * @Template("WasdBestnidBundle:Pregunta:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:Oferta')->find($id);
+        $entity = $em->getRepository('WasdBestnidBundle:Pregunta')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Oferta entity.');
+            throw $this->createNotFoundException('Unable to find Pregunta entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -216,7 +203,7 @@ class OfertaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('oferta_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('pregunta_edit', array('id' => $id)));
         }
 
         return array(
@@ -226,9 +213,9 @@ class OfertaController extends Controller
         );
     }
     /**
-     * Deletes a Oferta entity.
+     * Deletes a Pregunta entity.
      *
-     * @Route("/{id}", name="oferta_delete")
+     * @Route("/{id}", name="pregunta_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -238,21 +225,21 @@ class OfertaController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('WasdBestnidBundle:Oferta')->find($id);
+            $entity = $em->getRepository('WasdBestnidBundle:Pregunta')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Oferta entity.');
+                throw $this->createNotFoundException('Unable to find Pregunta entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('oferta'));
+        return $this->redirect($this->generateUrl('pregunta'));
     }
 
     /**
-     * Creates a form to delete a Oferta entity by id.
+     * Creates a form to delete a Pregunta entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -261,7 +248,7 @@ class OfertaController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('oferta_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('pregunta_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

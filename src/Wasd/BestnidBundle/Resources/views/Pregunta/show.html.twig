@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Oferta</h1>
+{% block contenido %}
+    <h1>Pregunta</h1>
 
     <table class="record_properties">
         <tbody>
@@ -10,28 +10,36 @@
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Monto</th>
-                <td>{{ entity.monto }}</td>
+                <th>Idpro</th>
+                <td>{{ entity.idPro }}</td>
             </tr>
             <tr>
-                <th>Necesidad</th>
-                <td>{{ entity.necesidad }}</td>
+                <th>Idusuario</th>
+                <td>{{ entity.idUsuario }}</td>
             </tr>
             <tr>
                 <th>Fecha</th>
                 <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ entity.status }}</td>
             </tr>
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('oferta') }}">
+        <a href="{{ path('pregunta') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('oferta_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('pregunta_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
