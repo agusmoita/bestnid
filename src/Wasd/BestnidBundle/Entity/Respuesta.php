@@ -41,6 +41,12 @@ class Respuesta
      */
      private $pregunta;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="Wasd\BestnidBundle\Entity\Usuario")
+     * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
+     */
+     private $usuario;
+
     /**
      * Get id
      *
@@ -122,5 +128,28 @@ class Respuesta
 
     public function __toString(){
         return $this->getDescripcion();
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \Wasd\BestnidBundle\Entity\Usuario $usuario
+     * @return Respuesta
+     */
+    public function setUsuario(\Wasd\BestnidBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+    
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \Wasd\BestnidBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

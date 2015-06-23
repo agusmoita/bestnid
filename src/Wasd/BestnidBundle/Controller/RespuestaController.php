@@ -54,8 +54,10 @@ class RespuestaController extends Controller
         if ($form->isValid()) {
 
             $pregunta = $entity->getPregunta();
+            $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
 
             $entity->setFecha(new \DateTime());
+            $entity->setUsuario($usuario);
             $pregunta->setRespuesta($entity);
 
             $em->persist($pregunta);
