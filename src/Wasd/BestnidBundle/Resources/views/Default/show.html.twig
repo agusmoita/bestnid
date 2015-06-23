@@ -56,16 +56,7 @@
             
         <div class="row">
             
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Preguntas</h3>
-                </div>
-                <div class="panel-body">
-                        
-                    {% for pregunta in preguntas %}
-                            <span> -{{ pregunta.descripcion }}</span><br />                     
-                    {% endfor %}  
-                    <br /><br />                      
+             
                     <form action="{{ path('pregunta_create') }}" method="post" {{ form_enctype(pregunta_form) }} role="form" >
                         <div class="form-group col-md-11">
                             <div class="input-group col-md-12">
@@ -82,10 +73,28 @@
                         </div>        
                         {{ form_rest(pregunta_form) }}           
                     </form>
-                </div>
-            </div>   
         </div>    
         {% endif %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Preguntas</h3>
+                </div>
+                <div class="panel-body">
+                       
+                    {% for pregunta in preguntas %}
+                   <dl>
+                        <dt>
+                            <span class="glyphicon glyphicon-user"> -{{ pregunta.descripcion }}</span><br /><br />                     
+                            
+                        </dt>
+                        <dd>
+                            <span>- hola</span>
+                        </dd>
+                   </dl>     
+                    {% endfor %}  
+                    <br /><br />                      
+                </div>
+            </div>  
 
 
     {% endif %}
