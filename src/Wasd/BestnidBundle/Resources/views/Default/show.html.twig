@@ -161,7 +161,7 @@
                             {% if app.user.id == entity.usuario.id %}
                                 <div class="row">
                                     <form action="{{ path('respuesta_create') }}" method="post" {{ form_enctype(formularios[i]) }} id="resform_{{ pregunta.id }}" role="form" >
-                                        <div class="form-group col-md-11">
+                                        <div class="form-group col-md-10">
                                             <div class="input-group col-md-12">
                                                 {{ form_widget(formularios[i].descripcion , {'attr': { 'class': 'form-control', 'placeholder': 'Respuesta:'}}) }}        
                                             </div>
