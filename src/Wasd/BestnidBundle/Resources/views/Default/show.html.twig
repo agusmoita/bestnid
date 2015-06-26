@@ -1,5 +1,17 @@
 {% extends '::base.html.twig' %}
 
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.pull-left').hide();
+        });
+    </script>
+
+{% endblock %}
+
 {% block contenido %}
 
     <div class="row">
@@ -24,16 +36,20 @@
 
     </div>
 
+    <!-- si inicio sesion -->
     {% if app.user %}
         
+        <!-- si es el dueño -->
         {% if app.user.id == entity.usuario.id %}
             <br>
-            <div class="row">
-                <div class="col-md-3">
-                    <a href="{{ path('producto_edit', {'id': entity.id}) }}" class="btn btn-success">Modificar</a>
+            {% if entity.fechafin|date('d/m/Y') < 'now'|date('d/m/Y') and ofertas|length == 0 and not entity.ofertaganadora %}
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="{{ path('producto_edit', {'id': entity.id}) }}" class="btn btn-success">Modificar</a>
+                    </div>
                 </div>
-            </div>
-            <br>
+                <br>
+            {% endif %}
 
             {% if not entity.ofertaganadora %}
                 <div class="row">
@@ -52,11 +68,13 @@
                                     <tr>
                                         <td>{{ oferta.fecha|date('d/m/Y') }}</td>
                                         <td>{{ oferta.necesidad }}</td>
-                                        <td>
-                                            <a class="btn btn-success" href="{{ path('seleccionar_oferta', { 'id': entity.id , 'oi': oferta.id }) }}">
-                                                Seleccionar
-                                            </a>
-                                        </td>
+                                        {% if entity.fechafin|date('d/m/Y') > 'now'|date('d/m/Y') %}
+                                            <td>
+                                                <a class="btn btn-success" href="{{ path('seleccionar_oferta', { 'id': entity.id , 'oi': oferta.id }) }}">
+                                                    Seleccionar
+                                                </a>
+                                            </td>
+                                        {% endif %}
                                     </tr>
                                 {% else %}
                                     <tr class="danger">
@@ -99,11 +117,11 @@
 
             {% endif %}
 
-
+        <!-- si no es el dueño -->
         {% else %}
             <br>
             <br>
-            {% if not entity.ofertaganadora %}
+            {% if entity.fechafin|date('d/m/Y') < 'now'|date('d/m/Y') %}
                 <form action="{{ path('oferta_create') }}" method="post" {{ form_enctype(oferta_form) }} id="form" role="form">
                     
                     <div class="row">
@@ -191,6 +209,7 @@
         </div>
     </div>  
 
+    <!-- si inicio sesion -->
     {% if app.user %}
         {% if app.user.id != entity.usuario.id %}
             <div class="row">

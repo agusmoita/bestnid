@@ -19,23 +19,6 @@ class OfertaController extends Controller
 {
 
     /**
-     * Lists all Oferta entities.
-     *
-     * @Route("/", name="oferta")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WasdBestnidBundle:Oferta')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
-    /**
      * Creates a new Oferta entity.
      *
      * @Route("/", name="oferta_create")
@@ -102,24 +85,6 @@ class OfertaController extends Controller
         $form->add('submit', 'submit', array('label' => 'Ofertar'));
 
         return $form;
-    }
-
-    /**
-     * Displays a form to create a new Oferta entity.
-     *
-     * @Route("/new", name="oferta_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Oferta();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
