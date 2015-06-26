@@ -19,23 +19,6 @@ class RespuestaController extends Controller
 {
 
     /**
-     * Lists all Respuesta entities.
-     *
-     * @Route("/", name="respuesta")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WasdBestnidBundle:Respuesta')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
-    /**
      * Creates a new Respuesta entity.
      *
      * @Route("/", name="respuesta_create")
@@ -90,24 +73,6 @@ class RespuestaController extends Controller
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
-    }
-
-    /**
-     * Displays a form to create a new Respuesta entity.
-     *
-     * @Route("/new", name="respuesta_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Respuesta();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**

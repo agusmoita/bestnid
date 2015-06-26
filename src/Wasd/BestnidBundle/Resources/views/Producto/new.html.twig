@@ -1,6 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block contenido %}
+
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+            <p><a href="{{ path('default') }}" class="btn btn-default"><< Volver</a></p>            
+        </div>
+    </div>
+
     <form action="{{ path('producto_create') }}" method="post" {{ form_enctype(form) }} id="form" role="form">
         <h3 class="titulo col-md-offset-3 lead">Nuevo producto</h3>
         

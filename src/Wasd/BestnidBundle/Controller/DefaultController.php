@@ -27,8 +27,12 @@ class DefaultController extends Controller
 
         $entities = $em->getRepository('WasdBestnidBundle:Producto')->findAll();
 
+        $deleteForm = $this->createDeleteForm(-1);
+
+
         return array(
             'entities' => $entities,
+            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -67,12 +71,14 @@ class DefaultController extends Controller
                 $f = $this->createForm(new RespuestaType(), $res, array('em' => $em))->createView();
                 $forms_res[] = $f;
             }
+            $deleteForm = $this->createDeleteForm($id);
 
             return array(
                 'entity'    => $entity,
                 'ofertas'   => $entity->getOfertas(),
                 'preguntas' => $entity->getPreguntas(),
-                'formularios' => $forms_res
+                'formularios' => $forms_res,
+                'delete_form' => $deleteForm->createView()
             );
         }
 
@@ -123,9 +129,10 @@ class DefaultController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('producto_delete', array('id' => $id)))
-            ->setMethod('POST')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Realizar'))
             ->getForm()
         ;
     }
+
 }

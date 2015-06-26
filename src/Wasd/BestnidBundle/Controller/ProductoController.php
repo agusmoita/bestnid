@@ -225,8 +225,24 @@ class ProductoController extends Controller
                 throw $this->createNotFoundException('Unable to find Producto entity.');
             }
 
+            if ($this->getUser()->getId() != $entity->getUsuario()->getId()){
+
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                        'No puedes eliminar este producto.');
+                return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+            }
+
+            $hoy = new \DateTime();
+            if ((count($entity->getOfertas()) > 0) || ($entity->getFechaFin() < $hoy) ){
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                        'No puedes eliminar este producto.');
+                return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
+            }
+
             $em->remove($entity);
             $em->flush();
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+                            'El producto se ha eliminado con éxito.');
         }
 
         return $this->redirect($this->generateUrl('default'));
@@ -244,7 +260,7 @@ class ProductoController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('producto_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar'))
+            ->add('submit', 'submit', array('label' => 'Realizar'))
             ->getForm()
         ;
     }

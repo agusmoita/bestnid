@@ -19,23 +19,6 @@ class PreguntaController extends Controller
 {
 
     /**
-     * Lists all Pregunta entities.
-     *
-     * @Route("/", name="pregunta")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WasdBestnidBundle:Pregunta')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
-    /**
      * Creates a new Pregunta entity.
      *
      * @Route("/", name="pregunta_create")
@@ -89,24 +72,6 @@ class PreguntaController extends Controller
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
-    }
-
-    /**
-     * Displays a form to create a new Pregunta entity.
-     *
-     * @Route("/new", name="pregunta_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Pregunta();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**

@@ -1,5 +1,46 @@
 {% extends '::base.html.twig' %}
 
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        function eliminar(href){       
+            $('#formEliminar').attr("action", href);
+            $('#modalConfirmarEliminar').modal('show');
+        };
+    </script>
+
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" role="dialog" 
+     aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Eliminación de Producto</h4>
+                </div>
+                <div class="modal-body bg-danger">
+                    <p class="text-justify">
+                    Se eliminará el producto entero.</p>
+                    <p class="text-justify"><strong>Esta acción no tiene vuelta atrás</strong></p>
+                </div>
+                <div class="modal-footer bg-danger" style="margin-top:0;">
+                    {{ form_start(delete_form, {'attr': {'id': 'formEliminar'}}) }}
+                        <div class="col-md-6 col-md-offset-6" style="margin-top: 30px;">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            {{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
+                        </div>
+                        {{ form_rest(delete_form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block contenido %}
     
     <div class="row">
@@ -28,6 +69,9 @@
                                 {% if app.user.id == entity.usuario.id %}
                                     <a class="modificar" style="margin-left: 5px;" href="{{ path('producto_edit', {'id': entity.id}) }}">
                                         <i class="glyphicon glyphicon-edit"></i>
+                                    </a>
+                                    <a class="eliminar" style="margin-left: 5px;" href="{{ path('producto_delete', {'id': entity.id}) }}" onclick="eliminar($(this).attr('href'));return false;">
+                                        <i class="glyphicon glyphicon-trash"></i>
                                     </a>
                                 {% endif %}
                             {% endif %}
