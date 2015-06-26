@@ -5,8 +5,7 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        function eliminar(href){       
-            // $('#formEliminar').attr("action", href);
+        function eliminar(){       
             $('#modalConfirmarEliminar').modal('show');
         };
     </script>
@@ -118,14 +117,9 @@
         
         {{ form_rest(edit_form) }}
     </form>
-
-		    {#{{ form_start(delete_form) }}#}
-		    	<div class="col-md-3" style="margin-top: 30px;">
-		        	{#{{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}#}
-                    <a href="{{ path('producto_delete', {'id': entity.id}) }}" onclick="eliminar($(this).attr('href'));return false;" class="btn btn-danger">Eliminar</a>
-		    	</div>
-		    	{#{{ form_rest(delete_form) }}
-		    </form>#}
+	    	<div class="col-md-3" style="margin-top: 30px;">
+                <a href="{{ path('producto_delete', {'id': entity.id}) }}" onclick="eliminar();return false;" class="btn btn-danger">Eliminar</a>
+	    	</div>
 	    </div>
 
 {% endblock %}

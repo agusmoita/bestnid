@@ -71,12 +71,14 @@ class DefaultController extends Controller
                 $f = $this->createForm(new RespuestaType(), $res, array('em' => $em))->createView();
                 $forms_res[] = $f;
             }
+            $deleteForm = $this->createDeleteForm($id);
 
             return array(
                 'entity'    => $entity,
                 'ofertas'   => $entity->getOfertas(),
                 'preguntas' => $entity->getPreguntas(),
-                'formularios' => $forms_res
+                'formularios' => $forms_res,
+                'delete_form' => $deleteForm->createView()
             );
         }
 
