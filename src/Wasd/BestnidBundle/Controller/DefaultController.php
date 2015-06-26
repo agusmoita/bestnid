@@ -27,8 +27,12 @@ class DefaultController extends Controller
 
         $entities = $em->getRepository('WasdBestnidBundle:Producto')->findAll();
 
+        $deleteForm = $this->createDeleteForm(-1);
+
+
         return array(
             'entities' => $entities,
+            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -110,6 +114,23 @@ class DefaultController extends Controller
             'last_username' => $sesion->get(SecurityContext::LAST_USERNAME),
             'error' => $error
         );
+    }
+
+    /**
+     * Creates a form to delete a Producto entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('producto_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Realizar'))
+            ->getForm()
+        ;
     }
 
 }
