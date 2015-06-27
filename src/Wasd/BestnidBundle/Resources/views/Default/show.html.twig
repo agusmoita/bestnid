@@ -78,7 +78,7 @@
         <!-- si es el dueño -->
         {% if app.user.id == entity.usuario.id %}
             <br>
-            {% if entity.fechafin|date('d/m/Y') < 'now'|date('d/m/Y') and ofertas|length == 0 and not entity.ofertaganadora %}
+            {% if entity.fechafin|date('Ymd') > 'now'|date('Ymd') and ofertas|length == 0 and not entity.ofertaganadora %}
                 <div class="row">
                     <div class="col-md-3">
                         <a href="{{ path('producto_edit', {'id': entity.id}) }}" class="btn btn-success">Modificar</a>
@@ -105,7 +105,7 @@
                                     <tr>
                                         <td>{{ oferta.fecha|date('d/m/Y') }}</td>
                                         <td>{{ oferta.necesidad }}</td>
-                                        {% if entity.fechafin|date('d/m/Y') > 'now'|date('d/m/Y') %}
+                                        {% if entity.fechafin|date('Ymd') < 'now'|date('Ymd') %}
                                             <td>
                                                 <a class="btn btn-success" href="{{ path('seleccionar_oferta', { 'id': entity.id , 'oi': oferta.id }) }}">
                                                     Seleccionar
@@ -158,7 +158,7 @@
         {% else %}
             <br>
             <br>
-            {% if entity.fechafin|date('d/m/Y') < 'now'|date('d/m/Y') %}
+            {% if entity.fechafin|date('Ymd') > 'now'|date('Ymd') %}
                 <form action="{{ path('oferta_create') }}" method="post" {{ form_enctype(oferta_form) }} id="form" role="form">
                     
                     <div class="row">
