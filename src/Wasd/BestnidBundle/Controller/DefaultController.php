@@ -82,6 +82,15 @@ class DefaultController extends Controller
             );
         }
 
+        $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($this->getUser()->getId());
+
+        $invalidUser = $em->getRepository('WasdBestnidBundle:Oferta')->findUsuarioRepetido($entity, $usuario);
+
+        $valido = true;
+        if ($invalidUser){
+            $valido = false;
+        }
+
         $oferta = new Oferta();
         $oferta_form = $this->createForm(new OfertaType(), $oferta);
         $pregunta = new Pregunta();
@@ -91,6 +100,7 @@ class DefaultController extends Controller
             'preguntas' =>$entity->getPreguntas(),
             'oferta_form' => $oferta_form->createView(),
             'pregunta_form' => $pregunta_form->createView(),
+            'valido' => $valido,
         );
     }
 
