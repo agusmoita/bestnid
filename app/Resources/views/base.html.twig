@@ -50,72 +50,27 @@
                             {#<li><a class="navbar-brand"><i class="glyphicon glyphicon-shopping-cart"></i> Bestnid</a></li>#}
                             <li><a class="navbar-brand"><img src="{{ asset('images/logo-bn-menu.png') }}" class="img-rounded"> Bestnid</a></li>
                             <li class="active"><a href="{{ path('default') }}"><i class="glyphicon glyphicon-home"></i></a></li>
-                            {# {% if not app.user %}
-                                <li><a href="{{ path('nosotros') }}">Sobre nosotros</a></li>
-                                <li><a href="{{ path('servicios_estatico') }}">Servicios</a></li>
-                                <li><a href="{{ path('clientes') }}">Clientes</a></li>
-                                <li><a href="{{ path('articulo') }}">Artículos</a></li>
-                                <li><a href="{{ path('links') }}">Links</a></li>
-                                <li><a href="{{ path('contacto') }}">Contacto</a></li>
-                            {% endif %}#}
                             {% if app.user %}
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Productos<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="{{ path('usuario_prods', {'id': app.user.id}) }}">Mis Producto</a></li>
+                                        <li class="divider"></li>
                                         <li><a href="{{ path('producto_new') }}">Nuevo Producto</a></li>
                                     </ul>
                                 </li>
-                               {#<li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Servicios<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Listado de Servicios</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Nuevo Servicio</a></li>
-                                    </ul>
-                                </li>
+
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Clientes<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorias<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Listado de Clientes</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Nuevo Cliente</a></li>
+                                        <li><a href="{{ path('categoria') }}">Ver Categorias</a></li>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                          <li class="divider"></li>
+                                          <li><a href="{{ path('categoria_new') }}">Nueva Categoria</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Medios<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('tipomedio') }}">Listado de Medios</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('tipomedio_new') }}">Nuevo Medio</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('pedido') }}">Listado de Pedidos</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('pedido_new') }}">Nuevo Pedido</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('equipo') }}">Listado de Equipos</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('equipo_new') }}">Nuevo Equipo</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Artículos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('articulo') }}">Listado de Artículos</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('articulo_new') }}">Nuevo Artículo</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="{{ path('carpeta') }}">Archivos</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('usuario') }}">Usuarios</a>
-                                </li> #}
+
                             {% endif %}
                         </ul>
                     {# fin menu #}
