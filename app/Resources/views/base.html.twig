@@ -59,19 +59,17 @@
                                         <li><a href="{{ path('producto_new') }}">Nuevo Producto</a></li>
                                     </ul>
                                 </li>
-
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorias<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('categoria') }}">Ver Categorias</a></li>
-                                        {% if is_granted('ROLE_ADMIN') %}
-                                          <li class="divider"></li>
-                                          <li><a href="{{ path('categoria_new') }}">Nueva Categoria</a></li>
-                                        {% endif %}
-                                    </ul>
-                                </li>
-
                             {% endif %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorias<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('categoria') }}">Ver Categorias</a></li>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                      <li class="divider"></li>
+                                      <li><a href="{{ path('categoria_new') }}">Nueva Categoria</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
                         </ul>
                     {# fin menu #}
                     {# menu intranet #}

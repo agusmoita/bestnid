@@ -17,24 +17,6 @@ use Wasd\BestnidBundle\Form\CategoriaType;
  */
 class CategoriaController extends Controller
 {
-
-    /**
-     * Lists all Categoria entities.
-     *
-     * @Route("/", name="categoria")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WasdBestnidBundle:Categoria')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
     /**
      * Creates a new Categoria entity.
      *
@@ -96,27 +78,6 @@ class CategoriaController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a Categoria entity.
-     *
-     * @Route("/{id}", name="categoria_show")
-     * @Method("GET")
-     * @Template("WasdBestnidBundle:Default:index.html.twig")
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WasdBestnidBundle:Producto')->buscarPorCategoria($id);
-
-        $deleteForm = $this->createDeleteForm(-1);
-
-        return array(
-            'entities'      => $entities,
-            'delete_form' => $deleteForm->createView(),
         );
     }
 

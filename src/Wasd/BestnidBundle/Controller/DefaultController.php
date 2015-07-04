@@ -40,6 +40,45 @@ class DefaultController extends Controller
     }
 
     /**
+     * Lists all Categoria entities.
+     *
+     * @Route("/categorias", name="categoria")
+     * @Method("GET")
+     * @Template("WasdBestnidBundle:Categoria:index.html.twig")
+     */
+    public function indexCategoriasAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('WasdBestnidBundle:Categoria')->findAll();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+    /**
+     * Finds and displays a Categoria entity.
+     *
+     * @Route("/categoria/{id}", name="categoria_show")
+     * @Method("GET")
+     * @Template("WasdBestnidBundle:Default:index.html.twig")
+     */
+    public function showCategoriaAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('WasdBestnidBundle:Producto')->buscarPorCategoria($id);
+
+        $deleteForm = $this->createDeleteForm(-1);
+
+        return array(
+            'entities'      => $entities,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
      * Finds and displays a Producto entity.
      *
      * @Route("/producto/{id}", name="producto_show")
