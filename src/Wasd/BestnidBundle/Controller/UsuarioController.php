@@ -57,9 +57,9 @@ class UsuarioController extends Controller
 
             $em->persist($entity);
             $em->flush();
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
                     'Usuario creado correctamente.');
-            return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('default'));
         }
 
         return array(
@@ -186,7 +186,7 @@ class UsuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:usuario')->find($id);
+        $entity = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find usuario entity.');
@@ -199,7 +199,7 @@ class UsuarioController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('default'));
         }
 
         return array(
