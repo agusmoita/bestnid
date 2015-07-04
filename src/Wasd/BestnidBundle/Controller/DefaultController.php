@@ -25,7 +25,10 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('WasdBestnidBundle:Producto')->findAll();
+        $f = new \DateTime();
+        $fecha = $f->format('Y-m-d');
+
+        $entities = $em->getRepository('WasdBestnidBundle:Producto')->buscarVigentes($fecha);
 
         $deleteForm = $this->createDeleteForm(-1);
 
@@ -115,13 +118,13 @@ class DefaultController extends Controller
     {
         $peticion =  $this->getRequest();
         $sesion = $peticion->getSession();
-        
+
         if ($peticion->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $peticion->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
             $error = $sesion->get(SecurityContext::AUTHENTICATION_ERROR);
         }
-        
+
         return array(
             'last_username' => $sesion->get(SecurityContext::LAST_USERNAME),
             'error' => $error

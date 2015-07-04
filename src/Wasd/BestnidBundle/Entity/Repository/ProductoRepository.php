@@ -12,6 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductoRepository extends EntityRepository
 {
+  public function buscarVigentes($fecha){
+    $em = $this->getEntityManager();
+    $consulta = $em->createQuery('
+      SELECT p FROM WasdBestnidBundle:Producto p
+      WHERE p.fechaFin > :fecha'
+      );
+    $consulta->setParameter('fecha', $fecha);
+
+    return $consulta->getResult();
+  }
+
   public function buscarPorUsuario($usuario){
     $em = $this->getEntityManager();
     $consulta = $em->createQuery('
