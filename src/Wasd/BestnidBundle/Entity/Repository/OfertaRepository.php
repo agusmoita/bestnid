@@ -26,4 +26,15 @@ class OfertaRepository extends EntityRepository
 
 		return $consulta->getResult();
 	}
+
+	public function buscarPorUsuario($usuario){
+    $em = $this->getEntityManager();
+    $consulta = $em->createQuery('
+      SELECT o FROM WasdBestnidBundle:Oferta o
+      WHERE o.usuario = :usuario'
+      );
+    $consulta->setParameter('usuario', $usuario);
+
+    return $consulta->getResult();
+  }
 }

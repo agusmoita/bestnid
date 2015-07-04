@@ -13,10 +13,34 @@ use Wasd\BestnidBundle\Form\OfertaType;
 /**
  * Oferta controller.
  *
- * @Route("/oferta")
+ * @Route("/intranet/oferta")
  */
 class OfertaController extends Controller
 {
+
+  /**
+   * @Route("/mios/{id}", name="usuario_ofertas")
+   * @Template("WasdBestnidBundle:Oferta:index.html.twig")
+   */
+  public function usuarioListAction($id)
+  {
+      $em = $this->getDoctrine()->getManager();
+
+      if ($this->getUser()->getId() != $id){
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                'No puedes ver las ofertas de otro usuario.');
+        return $this->redirect($this->generateUrl('default'));
+      }
+
+      $entities = $em->getRepository('WasdBestnidBundle:Oferta')->buscarPorUsuario($id);
+
+      $deleteForm = $this->createDeleteForm(-1);
+
+      return array(
+          'entities' => $entities,
+          'delete_form' => $deleteForm->createView(),
+      );
+  }
 
     /**
      * Creates a new Oferta entity.
@@ -41,16 +65,16 @@ class OfertaController extends Controller
             $validUser = $em->getRepository('WasdBestnidBundle:Oferta')->findUsuarioRepetido($producto, $usuario);
 
             if ($validUser){
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                         'Ya has realizado una oferta por este producto.');
                 return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));
             }
 
             $hoy = new \DateTime();
             if ($producto->getFechaFin() < $hoy){
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                         'No se pueden realizar más ofertas.');
-                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));            
+                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));
             }
 
             $entity->setFecha(new \DateTime());
@@ -60,7 +84,7 @@ class OfertaController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
                     'Oferta realizada con éxito.');
             return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
         }
