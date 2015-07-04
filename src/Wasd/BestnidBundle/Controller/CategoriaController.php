@@ -20,7 +20,7 @@ class CategoriaController extends Controller
     /**
      * Creates a new Categoria entity.
      *
-     * @Route("/", name="categoria_create")
+     * @Route("/create", name="categoria_create")
      * @Method("POST")
      * @Template("WasdBestnidBundle:Categoria:new.html.twig")
      */
@@ -34,8 +34,9 @@ class CategoriaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('categoria_show', array('id' => $entity->getId())));
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                    'Categoria creada correctamente.');
+            return $this->redirect($this->generateUrl('categoria'));
         }
 
         return array(
@@ -149,8 +150,9 @@ class CategoriaController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('categoria_edit', array('id' => $id)));
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                    'Categoria modificada correctamente.');
+            return $this->redirect($this->generateUrl('categoria'));
         }
 
         return array(
