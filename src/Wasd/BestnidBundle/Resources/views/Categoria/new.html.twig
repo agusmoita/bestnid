@@ -1,13 +1,20 @@
 {% extends '::base.html.twig' %}
 
 {% block contenido %}
+
+  <div class="row">
+      <div class="col-md-3 col-md-offset-9">
+          <p><a href="{{ path('default') }}" class="btn btn-default"><< Volver</a></p>
+      </div>
+  </div>
+
     <form action="{{ path('categoria_create') }}" method="post" {{ form_enctype(form) }} id="form" role="form">
         <h3 class="titulo col-md-offset-3 lead">Nueva categoria</h3>
-        
+
         <div class="row">
-            <div class="form-group col-md-6 col-md-offset-3">              
+            <div class="form-group col-md-6 col-md-offset-3">
                 <div class="input-group col-md-12">
-                    {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre'} }) }} 
+                    {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(form.nombre) }}
@@ -15,14 +22,13 @@
             </div>
         </div>
 
-                              
+
         <div class="row">
             <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
                 {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
             </div>
         </div>
-        
+
         {{ form_rest(form) }}
     </form>
 {% endblock %}
-

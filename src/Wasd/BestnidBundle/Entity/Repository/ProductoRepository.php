@@ -33,4 +33,15 @@ class ProductoRepository extends EntityRepository
 
     return $consulta->getResult();
   }
+
+  public function buscarPorCategoria($categoria){
+    $em = $this->getEntityManager();
+    $consulta = $em->createQuery('
+      SELECT p FROM WasdBestnidBundle:Producto p
+      WHERE p.categoria = :categoria'
+      );
+    $consulta->setParameter('categoria', $categoria);
+
+    return $consulta->getResult();
+  }
 }

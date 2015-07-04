@@ -1,29 +1,35 @@
 {% extends '::base.html.twig' %}
 
 {% block contenido %}
-    <form action="{{ path('categoria_update', {'id': entity.id}) }}" method="post" {{ form_enctype(edit_form) }} id="form" role="form">
-        <h3 class="titulo col-md-offset-3 lead">Modificar categoria</h3>
-        
-        <div class="row">
-            <div class="form-group col-md-6 col-md-offset-3">
-            	<label class="required">Nombre</label>              
-                <div class="input-group col-md-12">
-                    {{ form_widget(edit_form.nombre, { 'attr': {'class': 'form-control'} }) }} 
-                </div>
-                <div class="text-danger">
-                    {{ form_errors(edit_form.nombre) }}
-                </div>
-            </div>
-        </div>
 
-                              
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
-                {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
-            </div>
-        </div>
-        
-        {{ form_rest(edit_form) }}
-    </form>
+  <div class="row">
+      <div class="col-md-3 col-md-offset-9">
+          <p><a href="{{ path('categoria') }}" class="btn btn-default"><< Volver</a></p>            
+      </div>
+  </div>
+
+  <form action="{{ path('categoria_update', {'id': entity.id}) }}" method="post" {{ form_enctype(edit_form) }} id="form" role="form">
+      <h3 class="titulo col-md-offset-3 lead">Modificar categoria</h3>
+
+      <div class="row">
+          <div class="form-group col-md-6 col-md-offset-3">
+          	<label class="required">Nombre</label>
+              <div class="input-group col-md-12">
+                  {{ form_widget(edit_form.nombre, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+              <div class="text-danger">
+                  {{ form_errors(edit_form.nombre) }}
+              </div>
+          </div>
+      </div>
+
+
+      <div class="row">
+          <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
+              {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
+          </div>
+      </div>
+
+      {{ form_rest(edit_form) }}
+  </form>
 {% endblock %}
-

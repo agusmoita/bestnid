@@ -104,22 +104,18 @@ class CategoriaController extends Controller
      *
      * @Route("/{id}", name="categoria_show")
      * @Method("GET")
-     * @Template()
+     * @Template("WasdBestnidBundle:Default:index.html.twig")
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:Categoria')->find($id);
+        $entities = $em->getRepository('WasdBestnidBundle:Producto')->buscarPorCategoria($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Categoria entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm(-1);
 
         return array(
-            'entity'      => $entity,
+            'entities'      => $entities,
             'delete_form' => $deleteForm->createView(),
         );
     }
