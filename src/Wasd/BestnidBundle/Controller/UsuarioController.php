@@ -52,7 +52,7 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $entity->setRol('ROLE_USUARIO');
-            $entity->setStatus(false);
+            $entity->setStatus(true);
             $entity->setFechaAlta(new \DateTime());
 
             $em->persist($entity);

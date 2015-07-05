@@ -4,6 +4,7 @@ namespace Wasd\BestnidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields={"email"},
  *     message="Ya existe un usuario con el mismo email.")
  */
-class Usuario implements UserInterface
+class Usuario implements AdvancedUserInterface
 {
     /**
      * @var integer
@@ -73,7 +74,7 @@ class Usuario implements UserInterface
      * @Assert\Length(min=6, minMessage="La contraseña debe tener al menos 6 caracteres")
      */
     private $password;
-    
+
     /**
      * @var string
      *
@@ -110,7 +111,7 @@ class Usuario implements UserInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -133,7 +134,7 @@ class Usuario implements UserInterface
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -156,7 +157,7 @@ class Usuario implements UserInterface
     /**
      * Get apellido
      *
-     * @return string 
+     * @return string
      */
     public function getApellido()
     {
@@ -179,7 +180,7 @@ class Usuario implements UserInterface
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -202,7 +203,7 @@ class Usuario implements UserInterface
     /**
      * Get status
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStatus()
     {
@@ -212,7 +213,7 @@ class Usuario implements UserInterface
     function eraseCredentials()
     {
     }
-    
+
     function getRoles(){
         return array($this->getRol());
     }
@@ -226,14 +227,14 @@ class Usuario implements UserInterface
     public function setUserName($userName)
     {
         $this->user_name = $userName;
-    
+
         return $this;
     }
 
     /**
      * Get user_name
      *
-     * @return string 
+     * @return string
      */
     public function getUserName()
     {
@@ -249,14 +250,14 @@ class Usuario implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
-    
+
         return $this;
     }
 
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -277,14 +278,14 @@ class Usuario implements UserInterface
     public function setRol($rol)
     {
         $this->rol = $rol;
-    
+
         return $this;
     }
 
     /**
      * Get rol
      *
-     * @return string 
+     * @return string
      */
     public function getRol()
     {
@@ -300,14 +301,14 @@ class Usuario implements UserInterface
     public function setTelefono($telefono)
     {
         $this->telefono = $telefono;
-    
+
         return $this;
     }
 
     /**
      * Get telefono
      *
-     * @return string 
+     * @return string
      */
     public function getTelefono()
     {
@@ -323,14 +324,14 @@ class Usuario implements UserInterface
     public function setFechaAlta($fechaAlta)
     {
         $this->fecha_alta = $fechaAlta;
-    
+
         return $this;
     }
 
     /**
      * Get fecha_alta
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFechaAlta()
     {
@@ -346,14 +347,14 @@ class Usuario implements UserInterface
     public function setTarjeta($tarjeta)
     {
         $this->tarjeta = $tarjeta;
-    
+
         return $this;
     }
 
     /**
      * Get tarjeta
      *
-     * @return string 
+     * @return string
      */
     public function getTarjeta()
     {
@@ -376,7 +377,7 @@ class Usuario implements UserInterface
     public function addProducto(\Wasd\BestnidBundle\Entity\Producto $productos)
     {
         $this->productos[] = $productos;
-    
+
         return $this;
     }
 
@@ -393,7 +394,7 @@ class Usuario implements UserInterface
     /**
      * Get productos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProductos()
     {
@@ -430,10 +431,30 @@ class Usuario implements UserInterface
     /**
      * Get ofertas
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOfertas()
     {
         return $this->ofertas;
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->getStatus();
     }
 }
