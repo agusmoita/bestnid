@@ -1,16 +1,43 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Oferta edit</h1>
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3 col-md-offset-9">
+        <p><a href="{{ path('usuario_ofertas', {'id': app.user.id}) }}" class="btn btn-default"><< Volver</a></p>
+    </div>
+</div>
 
-    {{ form(edit_form) }}
+<form action="{{ path('oferta_update', {'id': entity.id}) }}" method="post" {{ form_enctype(edit_form) }} id="form" role="form">
+    <h3 class="titulo col-md-offset-2 lead">Modificar oferta</h3>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('oferta') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="row">
+        <div class="form-group col-md-3 col-md-offset-2">
+          <label class="required">Monto</label>
+            <div class="input-group col-md-12">
+                {{ form_widget(edit_form.monto, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="text-danger">
+                {{ form_errors(edit_form.monto) }}
+            </div>
+        </div>
+        <div class="form-group col-md-5">
+          <label class="required">Necesidad</label>
+            <div class="input-group col-md-12">
+                {{ form_widget(edit_form.necesidad, { 'attr': {'class': 'form-control', 'readonly': 'true'} }) }}
+            </div>
+            <div class="text-danger">
+                {{ form_errors(edit_form.necesidad) }}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2" style="margin-top: 30px;">
+            {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-success'} }) }}
+        </div>
+    </div>
+
+    {{ form_rest(edit_form) }}
+</form>
 {% endblock %}

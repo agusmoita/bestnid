@@ -153,13 +153,18 @@ class OfertaController extends Controller
             throw $this->createNotFoundException('Unable to find Oferta entity.');
         }
 
+        $producto = $entity->getProducto();
+        if ($producto->getOfertaGanadora() == $entity){
+          $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                  'No puedes modificar esta oferta.');
+          return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
+        }
+
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -177,7 +182,7 @@ class OfertaController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Guardar'));
 
         return $form;
     }
@@ -198,7 +203,6 @@ class OfertaController extends Controller
             throw $this->createNotFoundException('Unable to find Oferta entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
@@ -211,7 +215,6 @@ class OfertaController extends Controller
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
     /**
@@ -233,11 +236,19 @@ class OfertaController extends Controller
                 throw $this->createNotFoundException('Unable to find Oferta entity.');
             }
 
+            $producto = $entity->getProducto();
+            if ($producto->getOfertaGanadora() == $entity){
+              $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                      'No puedes eliminar esta oferta.');
+              return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
+            }
+
             $em->remove($entity);
             $em->flush();
         }
-
-        return $this->redirect($this->generateUrl('oferta'));
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                'Oferta eliminada con éxito.');
+        return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
     }
 
     /**
@@ -252,7 +263,7 @@ class OfertaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('oferta_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Realizar'))
             ->getForm()
         ;
     }
