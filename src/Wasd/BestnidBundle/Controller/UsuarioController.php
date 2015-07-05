@@ -271,7 +271,8 @@ class UsuarioController extends Controller
                 'label' => 'Fecha Hasta',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
-                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)'
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => false
                 ))
           ->getForm();
 
@@ -292,7 +293,63 @@ class UsuarioController extends Controller
               $usuarios = $em->getRepository('WasdBestnidBundle:Usuario')->cantFechas($desde, $hasta);
               return array(
                 'form' => $formulario->createView(),
+                'desde' => $d,
+                'hasta' => $h,
                 'usuarios' => $usuarios
+              );
+            }
+          }
+
+          return array(
+            'form' => $formulario->createView()
+          );
+    }
+
+    /**
+     * @Route("/admin/products_stats", name="productos_estadisticas")
+     * @Template()
+     */
+    public function prodStatsAction()
+    {
+        $request = $this->getRequest();
+
+        $formulario = $this->createFormBuilder()
+          ->add('fechaDesde', 'date', array(
+                'label' => 'Fecha Desde',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => true
+                ))
+          ->add('fechaHasta', 'date', array(
+                'label' => 'Fecha Hasta',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => false
+                ))
+          ->getForm();
+
+          if ($request->getMethod() == 'POST'){
+            $formulario->bind($request);
+            if ($formulario->isValid()){
+              $em = $this->getDoctrine()->getManager();
+              $d = $formulario->get('fechaDesde')->getData();
+              $h = $formulario->get('fechaHasta')->getData();
+              $desde = $d->format('Y-m-d');
+              if ($h == null){
+                $hoy = new \DateTime();
+                $hasta = $hoy->format('Y-m-d');
+              }
+              else{
+                $hasta = $h->format('Y-m-d');
+              }
+              $productos = $em->getRepository('WasdBestnidBundle:Producto')->cantFechas($desde, $hasta);
+              return array(
+                'form' => $formulario->createView(),
+                'desde' => $d,
+                'hasta' => $h,
+                'productos' => $productos
               );
             }
           }
