@@ -12,34 +12,34 @@
 {% block contenido %}
     <form action="{{ path('usuario_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} id="form" role="form" class="form-inline">
         <h3 class="titulo col-md-offset-3">Modificar usuario</h3>
-        
+
         <div class="row">
-        	<div class="form-group col-md-3 col-md-offset-3">              
+        	<div class="form-group col-md-3 col-md-offset-3">
                 {{ form_label(edit_form.user_name) }}
                 <div class="input-group col-md-12">
-                    {{ form_widget(edit_form.user_name, { 'attr': {'class': 'form-control'} }) }} 
+                    {{ form_widget(edit_form.user_name, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(edit_form.user_name) }}
                 </div>
             </div>
-            <div class="form-group col-md-3">              
+            <div class="form-group col-md-3">
                 {{ form_label(edit_form.email) }}
                 <div class="input-group col-md-12">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    {{ form_widget(edit_form.email, { 'attr': {'class': 'form-control'} }) }} 
+                    {{ form_widget(edit_form.email, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(edit_form.email) }}
                 </div>
             </div>
-        </div>              
+        </div>
         <div class="row">
             <div class="form-group col-md-6 col-md-offset-3">
                 <label>Contraseña</label>
                 <div class="input-group col-md-12">
                     {% for contrasenia in edit_form.password %}
-                        {{ form_widget(contrasenia, { 'attr': {'value': entity.password, 'class': 'form-control' } }) }} 
+                        {{ form_widget(contrasenia, { 'attr': {'value': entity.password, 'class': 'form-control' } }) }}
                         {% if loop.first %}
                             <span class="input-group-addon"> </span>
                         {% endif %}
@@ -51,19 +51,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-3 col-md-offset-3">              
+            <div class="form-group col-md-3 col-md-offset-3">
                 {{ form_label(edit_form.apellido) }}
                 <div class="input-group col-md-12">
-                    {{ form_widget(edit_form.apellido, { 'attr': {'class': 'form-control'} }) }} 
+                    {{ form_widget(edit_form.apellido, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(edit_form.apellido) }}
                 </div>
             </div>
-            <div class="form-group col-md-3">              
+            <div class="form-group col-md-3">
                 {{ form_label(edit_form.nombre) }}
                 <div class="input-group col-md-12">
-                    {{ form_widget(edit_form.nombre, { 'attr': {'class': 'form-control'} }) }} 
+                    {{ form_widget(edit_form.nombre, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(edit_form.nombre) }}
@@ -71,21 +71,21 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-3 col-md-offset-3">              
+            <div class="form-group col-md-3 col-md-offset-3">
                 {{ form_label(edit_form.telefono) }}
                 <div class="input-group col-md-12">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-                    {{ form_widget(edit_form.telefono, { 'attr': {'class': 'form-control'} }) }} 
+                    {{ form_widget(edit_form.telefono, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(edit_form.telefono) }}
                 </div>
             </div>
-            <div class="form-group col-md-3">              
+            <div class="form-group col-md-3">
                 {{ form_label(edit_form.tarjeta) }}
                 <div class="input-group col-md-12">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-credit-card"></i></span>
-                    {{ form_widget(edit_form.tarjeta, { 'attr': {'class': 'form-control'} }) }} 
+                    {{ form_widget(edit_form.tarjeta, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="text-danger">
                     {{ form_errors(edit_form.tarjeta) }}
@@ -98,11 +98,11 @@
                 {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-success'} }) }}
             </div>
             <div class="col-md-3">
-                <a href="{{ path('usuario_show', {'id': entity.id } ) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Cancelar">
+                <a href="{{ path('default') }}" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Cancelar">
                     <span class="glyphicon glyphicon-remove"></span></a>
             </div>
         </div>
-        
+
         {{ form_rest(edit_form) }}
     </form>
 {% endblock %}

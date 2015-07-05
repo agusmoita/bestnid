@@ -250,4 +250,13 @@ class UsuarioController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * @Route("/admin/user_stats", name="usuarios_estadisticas")
+     * @Template()
+     */
+    public function userStatsAction()
+    {
+        // Logic
+    }
 }
