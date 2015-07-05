@@ -1,0 +1,86 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+    <link type="text/css" rel="stylesheet"
+        href="{{ asset('css/datepicker3.css') }}" />
+
+{% endblock %}
+
+    {% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript"
+        src="{{ asset('js/bootstrap-datepicker.js') }}">
+    </script>
+
+    <script type="text/javascript"
+        src="{{ asset('js/locales/bootstrap-datepicker.es.js') }}">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+                $('.fechapicker').datepicker({
+                    format: "dd/mm/yyyy",
+                    todayBtn: true,
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true
+                });
+        });
+    </script>
+
+{% endblock %}
+
+{% block contenido %}
+
+<div class="row">
+    <div class="col-md-3">
+      <h3 class="titulo col-md-offset-3 lead">Estadísticas de usuarios</h3>
+    </div>
+    <div class="col-md-3 col-md-offset-5">
+        <p><a href="{{ path('default') }}" class="btn btn-default"><< Volver</a></p>
+    </div>
+</div>
+
+<form action="{{ path('usuarios_estadisticas') }}" method="post" {{ form_enctype(form) }} id="form" role="form">
+
+    <div class="row">
+        <div class="form-group col-md-3 col-md-offset-1">
+          <label class="required">Fecha Desde</label>
+            <div class="input-group col-md-12">
+                {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker'} }) }}
+            </div>
+            <div class="text-danger">
+                {{ form_errors(form.fechaDesde) }}
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="required">Fecha Hasta</label>
+            <div class="input-group col-md-12">
+                {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker'} }) }}
+            </div>
+            <div class="text-danger">
+                {{ form_errors(form.fechaHasta) }}
+            </div>
+        </div>
+        <div class="col-md-3" style="margin-top: 38px;">
+            <button type="submit" class="btn btn-success">Buscar</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+    </div>
+
+    {{ form_rest(form) }}
+</form>
+
+{% if app.request.method == 'POST' %}
+  <h3>En este período de tiempo se han registrado {{ usuarios }} usuarios</h3>
+{% else %}
+  <h3>Seleccione un período de fechas</h3>
+{% endif %}
+
+{% endblock %}

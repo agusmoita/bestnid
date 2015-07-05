@@ -17,6 +17,7 @@ security:
          - { path: ^/intranet/usuario/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/intranet/usuario/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/intranet/categoria/*, roles: ROLE_ADMIN }
+         - { path: ^/intranet/usuario/admin/*, roles: ROLE_ADMIN }
          - { path: ^/intranet/*, roles: [ROLE_USUARIO, ROLE_ADMIN] }
 
 

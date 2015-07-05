@@ -257,6 +257,48 @@ class UsuarioController extends Controller
      */
     public function userStatsAction()
     {
-        // Logic
+        $request = $this->getRequest();
+
+        $formulario = $this->createFormBuilder()
+          ->add('fechaDesde', 'date', array(
+                'label' => 'Fecha Desde',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => true
+                ))
+          ->add('fechaHasta', 'date', array(
+                'label' => 'Fecha Hasta',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)'
+                ))
+          ->getForm();
+
+          if ($request->getMethod() == 'POST'){
+            $formulario->bind($request);
+            if ($formulario->isValid()){
+              $em = $this->getDoctrine()->getManager();
+              $d = $formulario->get('fechaDesde')->getData();
+              $h = $formulario->get('fechaHasta')->getData();
+              $desde = $d->format('Y-m-d');
+              if ($h == null){
+                $hoy = new \DateTime();
+                $hasta = $hoy->format('Y-m-d');
+              }
+              else{
+                $hasta = $h->format('Y-m-d');
+              }
+              $usuarios = $em->getRepository('WasdBestnidBundle:Usuario')->cantFechas($desde, $hasta);
+              return array(
+                'form' => $formulario->createView(),
+                'usuarios' => $usuarios
+              );
+            }
+          }
+
+          return array(
+            'form' => $formulario->createView()
+          );
     }
 }
