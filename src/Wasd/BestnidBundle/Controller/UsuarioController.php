@@ -366,6 +366,25 @@ class UsuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
+
+        $productos = $usuario->getProductos();
+        foreach ($productos as $producto) {
+          if ($producto->getOfertaGanadora() == null){
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                      'No puedes eliminar tu perfil porque tienes subastas pendientes.');
+            return $this->redirect($this->generateUrl('default'));  
+          }
+        }
+
+        $ofertas = $usuario->getOfertas();
+        foreach ($ofertas as $oferta) {
+          if ($oferta->getProducto()->getOfertaGanadora() == null){
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                      'No puedes eliminar tu perfil porque tienes ofertas pendientes.');
+            return $this->redirect($this->generateUrl('default'));  
+          }
+        }
+
         $usuario->setStatus(false);
         $em->persist($usuario);
         $em->flush();
