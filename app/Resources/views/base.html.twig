@@ -30,6 +30,29 @@
 
     </head>
     <body>
+        {% if app.user %}
+            <div class="modal fade" id="modalConfirmarEliminarPerfil" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Eliminación de Perfil</h4>
+                        </div>
+                        <div class="modal-body bg-danger">
+                            <p class="text-justify">
+                            ¿Está seguro de esto?.</p>
+                            <p class="text-justify"><strong>Esta acción no tiene vuelta atrás</strong></p>
+                        </div>
+                        <div class="modal-footer bg-danger" style="margin-top:0;">
+                            <div class="col-md-6 col-md-offset-6" style="margin-top: 30px;">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <a href="{{ path('eliminar_perfil', {'id': app.user.id }) }}" class="btn btn-danger">Realizar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         {% block modals %}{% endblock %}
         {# MENU #}
             <nav class="navbar navbar-inverse navbar-fixed-top small">
@@ -94,6 +117,10 @@
                                     <ul class="dropdown-menu" role="menu">
                                       <li>
                                         <a href="{{ path('usuario_edit', {'id': app.user.id}) }}" class="btn btn-default cerrar-sesion">Editar perfil</a>
+                                      </li>
+                                      <li class="divider"></li>
+                                      <li>
+                                        <a href="#" onclick="eliminarPerfil();return false;" class="btn btn-default cerrar-sesion">Eliminar perfil</a>
                                       </li>
                                       <li class="divider"></li>
                                       <li>
@@ -191,6 +218,11 @@
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>>
         <script src="{{ asset('js/bootstrap-table.js') }}"></script>
         <script src="{{ asset('js/locales/bootstrap-table-es-AR.js') }}"></script>
+        <script type="text/javascript">
+        function eliminarPerfil(){
+            $('#modalConfirmarEliminarPerfil').modal('show');
+        };
+        </script>
 
     {% endblock %}
     </body>

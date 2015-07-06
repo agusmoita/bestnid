@@ -358,4 +358,19 @@ class UsuarioController extends Controller
             'form' => $formulario->createView()
           );
     }
+
+    /**
+     * @Route("/{id}/eliminarPerfil", name="eliminar_perfil")
+     */
+    public function eliminarPerfilAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
+        $usuario->setStatus(false);
+        $em->persist($usuario);
+        $em->flush();
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                    'Perfil eliminado correctamente.');
+        return $this->redirect($this->generateUrl('usuario_logout'));
+    }
 }
