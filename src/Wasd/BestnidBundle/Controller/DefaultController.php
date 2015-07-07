@@ -52,8 +52,11 @@ class DefaultController extends Controller
 
         $entities = $em->getRepository('WasdBestnidBundle:Categoria')->findAll();
 
+        $deleteForm = $this->createDeleteCatForm(-1);
+
         return array(
             'entities' => $entities,
+            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -76,6 +79,23 @@ class DefaultController extends Controller
             'entities'      => $entities,
             'delete_form' => $deleteForm->createView(),
         );
+    }
+
+    /**
+     * Creates a form to delete a Categoria entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteCatForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('categoria_delete', array('id' => $id)))
+            ->setMethod('POST')
+            ->add('submit', 'submit', array('label' => 'Realizar'))
+            ->getForm()
+        ;
     }
 
     /**

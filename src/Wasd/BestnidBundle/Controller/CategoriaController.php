@@ -164,7 +164,7 @@ class CategoriaController extends Controller
     /**
      * Deletes a Categoria entity.
      *
-     * @Route("/{id}", name="categoria_delete")
+     * @Route("/{id}/delete", name="categoria_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
@@ -178,6 +178,13 @@ class CategoriaController extends Controller
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Categoria entity.');
+            }
+            $productos = $em->getRepository('WasdBestnidBundle:Producto')->buscarPorCategoria($id);
+
+            if (count($productos) > 0){
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                    'Hay productos que pertenecen a esa categoría.');
+            return $this->redirect($this->generateUrl('categoria'));
             }
 
             $em->remove($entity);
