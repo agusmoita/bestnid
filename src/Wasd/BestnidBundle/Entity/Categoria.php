@@ -3,12 +3,15 @@
 namespace Wasd\BestnidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Categoria
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wasd\BestnidBundle\Entity\Repository\CategoriaRepository")
+ * @UniqueEntity(fields={"nombre"},
+ *     message="Ya existe esta categoría.")
  */
 class Categoria
 {
