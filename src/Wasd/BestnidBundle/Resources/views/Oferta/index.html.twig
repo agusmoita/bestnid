@@ -62,6 +62,9 @@
                         <td>${{ entity.monto }}</td>
                         <td>{{ entity.fecha|date('d/m/Y') }}</td>
                         <td>
+                            <a class="modificar" style="margin-left: 5px;" href="{{ path('oferta_show', {'id': entity.id}) }}">
+                                <i class="glyphicon glyphicon-eye-open"></i>
+                            </a>
                             <a class="modificar" style="margin-left: 5px;" href="{{ path('oferta_edit', {'id': entity.id}) }}">
                                 <i class="glyphicon glyphicon-edit"></i>
                             </a>

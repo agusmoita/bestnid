@@ -1,40 +1,46 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Oferta</h1>
+{% block contenido %}
+    <div class="row">
+      <div class="col-md-3 col-md-offset-9">
+          <p><a href="{{ path('usuario_ofertas', {'id': app.user.id}) }}" class="btn btn-default"><< Volver</a></p>
+      </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-3 col-md-offset-3">
+            <label class="required" for="">
+                Producto
+            </label>
+            <div class="col-md-12">
+                <a href="{{ path('producto_show', {'id': entity.producto.id}) }}">{{ entity.producto }}</a>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label class="required" for="">
+                Fecha
+            </label>
+            <div class="col-md-12">
+                {{ entity.fecha|date('d/m/Y') }}
+            </div>
+        </div>
+    </div>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Monto</th>
-                <td>{{ entity.monto }}</td>
-            </tr>
-            <tr>
-                <th>Necesidad</th>
-                <td>{{ entity.necesidad }}</td>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('oferta') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('oferta_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="row">
+        <div class="form-group col-md-3 col-md-offset-3">
+            <label class="required" for="">
+                Monto
+            </label>
+            <div class="col-md-12">
+                ${{ entity.monto }}
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label class="required" for="">
+                Necesidad
+            </label>
+            <div class="col-md-12">
+                {{ entity.necesidad }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
