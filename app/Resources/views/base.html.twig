@@ -30,29 +30,31 @@
 
     </head>
     <body>
-        {% if app.user %}
-            <div class="modal fade" id="modalConfirmarEliminarPerfil" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-danger">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Eliminación de Perfil</h4>
-                        </div>
-                        <div class="modal-body bg-danger">
-                            <p class="text-justify">
-                            ¿Está seguro de esto?.</p>
-                            <p class="text-justify"><strong>Esta acción no tiene vuelta atrás</strong></p>
-                        </div>
-                        <div class="modal-footer bg-danger" style="margin-top:0;">
-                            <div class="col-md-6 col-md-offset-6" style="margin-top: 30px;">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <a href="{{ path('eliminar_perfil', {'id': app.user.id }) }}" class="btn btn-danger">Realizar</a>
+        {# modal de eliminar perfil #}
+            {% if app.user %}
+                <div class="modal fade" id="modalConfirmarEliminarPerfil" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Eliminación de Perfil</h4>
+                            </div>
+                            <div class="modal-body bg-danger">
+                                <p class="text-justify">
+                                ¿Está seguro de esto?.</p>
+                                <p class="text-justify"><strong>Esta acción no tiene vuelta atrás</strong></p>
+                            </div>
+                            <div class="modal-footer bg-danger" style="margin-top:0;">
+                                <div class="col-md-6 col-md-offset-6" style="margin-top: 30px;">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <a href="{{ path('eliminar_perfil', {'id': app.user.id }) }}" class="btn btn-danger">Realizar</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        {# fin modal #}
         {% block modals %}{% endblock %}
         {# MENU #}
             <nav class="navbar navbar-inverse navbar-fixed-top small">
@@ -84,16 +86,18 @@
                                 </li>
                                 <li><a href="{{ path('usuario_ofertas', {'id': app.user.id}) }}">Mis Ofertas</a></li>
                             {% endif %}
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorias<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ path('categoria') }}">Ver Categorias</a></li>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                      <li class="divider"></li>
-                                      <li><a href="{{ path('categoria_new') }}">Nueva Categoria</a></li>
-                                    {% endif %}
-                                </ul>
-                            </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorias<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('categoria') }}">Ver Categorías</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('categoria_new') }}">Nueva Categoría</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li><a href="{{ path('categoria') }}">Categorías</a></li>
+                            {% endif %}
                             {% if is_granted('ROLE_ADMIN') %}
                               <li class="dropdown">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Estadísticas<span class="caret"></span></a>
