@@ -52,14 +52,14 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $entity->setRol('ROLE_USUARIO');
-            $entity->setStatus(false);
+            $entity->setStatus(true);
             $entity->setFechaAlta(new \DateTime());
 
             $em->persist($entity);
             $em->flush();
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
                     'Usuario creado correctamente.');
-            return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('default'));
         }
 
         return array(
@@ -186,7 +186,7 @@ class UsuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WasdBestnidBundle:usuario')->find($id);
+        $entity = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find usuario entity.');
@@ -199,7 +199,7 @@ class UsuarioController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('default'));
         }
 
         return array(
@@ -249,5 +249,151 @@ class UsuarioController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * @Route("/admin/user_stats", name="usuarios_estadisticas")
+     * @Template()
+     */
+    public function userStatsAction()
+    {
+        $request = $this->getRequest();
+
+        $formulario = $this->createFormBuilder()
+          ->add('fechaDesde', 'date', array(
+                'label' => 'Fecha Desde',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => true
+                ))
+          ->add('fechaHasta', 'date', array(
+                'label' => 'Fecha Hasta',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => false
+                ))
+          ->getForm();
+
+          if ($request->getMethod() == 'POST'){
+            $formulario->bind($request);
+            if ($formulario->isValid()){
+              $em = $this->getDoctrine()->getManager();
+              $d = $formulario->get('fechaDesde')->getData();
+              $h = $formulario->get('fechaHasta')->getData();
+              $desde = $d->format('Y-m-d');
+              if ($h == null){
+                $hoy = new \DateTime();
+                $hasta = $hoy->format('Y-m-d');
+              }
+              else{
+                $hasta = $h->format('Y-m-d');
+              }
+              $usuarios = $em->getRepository('WasdBestnidBundle:Usuario')->cantFechas($desde, $hasta);
+              $cant = count($usuarios);
+              return array(
+                'form' => $formulario->createView(),
+                'desde' => $d,
+                'hasta' => $h,
+                'usuarios' => $usuarios,
+                'cant' => $cant
+              );
+            }
+          }
+
+          return array(
+            'form' => $formulario->createView()
+          );
+    }
+
+    /**
+     * @Route("/admin/products_stats", name="productos_estadisticas")
+     * @Template()
+     */
+    public function prodStatsAction()
+    {
+        $request = $this->getRequest();
+
+        $formulario = $this->createFormBuilder()
+          ->add('fechaDesde', 'date', array(
+                'label' => 'Fecha Desde',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => true
+                ))
+          ->add('fechaHasta', 'date', array(
+                'label' => 'Fecha Hasta',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => 'Fecha incorrecta (dd/mm/aaaa)',
+                'required' => false
+                ))
+          ->getForm();
+
+          if ($request->getMethod() == 'POST'){
+            $formulario->bind($request);
+            if ($formulario->isValid()){
+              $em = $this->getDoctrine()->getManager();
+              $d = $formulario->get('fechaDesde')->getData();
+              $h = $formulario->get('fechaHasta')->getData();
+              $desde = $d->format('Y-m-d');
+              if ($h == null){
+                $hoy = new \DateTime();
+                $hasta = $hoy->format('Y-m-d');
+              }
+              else{
+                $hasta = $h->format('Y-m-d');
+              }
+              $productos = $em->getRepository('WasdBestnidBundle:Producto')->cantFechas($desde, $hasta);
+              $cant = count($productos);
+              return array(
+                'form' => $formulario->createView(),
+                'desde' => $d,
+                'hasta' => $h,
+                'productos' => $productos,
+                'cant' => $cant
+              );
+            }
+          }
+
+          return array(
+            'form' => $formulario->createView()
+          );
+    }
+
+    /**
+     * @Route("/{id}/eliminarPerfil", name="eliminar_perfil")
+     */
+    public function eliminarPerfilAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('WasdBestnidBundle:Usuario')->find($id);
+
+        $productos = $usuario->getProductos();
+        foreach ($productos as $producto) {
+          if ($producto->getOfertaGanadora() == null){
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                      'No puedes eliminar tu perfil porque tienes subastas pendientes.');
+            return $this->redirect($this->generateUrl('default'));  
+          }
+        }
+
+        $ofertas = $usuario->getOfertas();
+        foreach ($ofertas as $oferta) {
+          if ($oferta->getProducto()->getOfertaGanadora() == null){
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                      'No puedes eliminar tu perfil porque tienes ofertas pendientes.');
+            return $this->redirect($this->generateUrl('default'));  
+          }
+        }
+
+        $usuario->setStatus(false);
+        $em->persist($usuario);
+        $em->flush();
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                    'Perfil eliminado correctamente.');
+        return $this->redirect($this->generateUrl('usuario_logout'));
     }
 }

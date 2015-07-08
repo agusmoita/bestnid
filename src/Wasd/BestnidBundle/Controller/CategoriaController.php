@@ -17,28 +17,10 @@ use Wasd\BestnidBundle\Form\CategoriaType;
  */
 class CategoriaController extends Controller
 {
-
-    /**
-     * Lists all Categoria entities.
-     *
-     * @Route("/", name="categoria")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('WasdBestnidBundle:Categoria')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
     /**
      * Creates a new Categoria entity.
      *
-     * @Route("/", name="categoria_create")
+     * @Route("/create", name="categoria_create")
      * @Method("POST")
      * @Template("WasdBestnidBundle:Categoria:new.html.twig")
      */
@@ -52,8 +34,9 @@ class CategoriaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('categoria_show', array('id' => $entity->getId())));
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                    'Categoria creada correctamente.');
+            return $this->redirect($this->generateUrl('categoria'));
         }
 
         return array(
@@ -96,31 +79,6 @@ class CategoriaController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a Categoria entity.
-     *
-     * @Route("/{id}", name="categoria_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('WasdBestnidBundle:Categoria')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Categoria entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -192,8 +150,9 @@ class CategoriaController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('categoria_edit', array('id' => $id)));
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                    'Categoria modificada correctamente.');
+            return $this->redirect($this->generateUrl('categoria'));
         }
 
         return array(
@@ -205,7 +164,7 @@ class CategoriaController extends Controller
     /**
      * Deletes a Categoria entity.
      *
-     * @Route("/{id}", name="categoria_delete")
+     * @Route("/{id}/delete", name="categoria_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
@@ -219,6 +178,13 @@ class CategoriaController extends Controller
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Categoria entity.');
+            }
+            $productos = $em->getRepository('WasdBestnidBundle:Producto')->buscarPorCategoria($id);
+
+            if (count($productos) > 0){
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                    'Hay productos que pertenecen a esa categoría.');
+            return $this->redirect($this->generateUrl('categoria'));
             }
 
             $em->remove($entity);

@@ -18,6 +18,30 @@ use Wasd\BestnidBundle\Form\ProductoType;
 class ProductoController extends Controller
 {
 
+  /**
+   * @Route("/mios/{id}", name="usuario_prods")
+   * @Template("WasdBestnidBundle:Default:index.html.twig")
+   */
+  public function usuarioListAction($id)
+  {
+      $em = $this->getDoctrine()->getManager();
+
+      if ($this->getUser()->getId() != $id){
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                'No puedes ver los productos de otro usuario.');
+        return $this->redirect($this->generateUrl('default'));
+      }
+
+      $entities = $em->getRepository('WasdBestnidBundle:Producto')->buscarPorUsuario($id);
+
+      $deleteForm = $this->createDeleteForm(-1);
+
+      return array(
+          'entities' => $entities,
+          'delete_form' => $deleteForm->createView(),
+      );
+  }
+
     /**
      * Creates a new Producto entity.
      *
@@ -118,14 +142,14 @@ class ProductoController extends Controller
 
         if ($this->getUser()->getId() != $entity->getUsuario()->getId()){
 
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                     'No puedes modificar este producto.');
             return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
         }
 
         $hoy = new \DateTime();
         if ((count($entity->getOfertas()) > 0) || ($entity->getFechaFin() < $hoy) ){
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                     'No puedes modificar este producto.');
             return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
         }
@@ -227,21 +251,21 @@ class ProductoController extends Controller
 
             if ($this->getUser()->getId() != $entity->getUsuario()->getId()){
 
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                         'No puedes eliminar este producto.');
                 return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
             }
 
             $hoy = new \DateTime();
             if ((count($entity->getOfertas()) > 0) || ($entity->getFechaFin() < $hoy) ){
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                         'No puedes eliminar este producto.');
                 return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
             }
 
             $em->remove($entity);
             $em->flush();
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
                             'El producto se ha eliminado con éxito.');
         }
 
@@ -277,9 +301,9 @@ class ProductoController extends Controller
 
         $hoy = new \DateTime();
         if ($producto->getFechaFin() > $hoy){
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                     'Todavía no puedes elegir un ganador.');
-            return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));            
+            return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
         }
 
         $producto->setOfertaGanadora($oferta);
@@ -293,7 +317,7 @@ class ProductoController extends Controller
         $destino = $oferta->getUsuario()->getEmail();
         $this->enviarMail($titulo, $nombre, $telefono, $destino);
 
-        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
                     'Oferta seleccionada con éxito.');
         return $this->redirect($this->generateUrl('producto_show', array('id'=>$id)));
     }
@@ -314,20 +338,20 @@ class ProductoController extends Controller
             ->setTo(array($destino))
             ->setBody(
                 $this->renderView(
-                    $template, 
+                    $template,
                     $args
-                ), 
+                ),
                 'text/html'
             );
 
         try {
             $this->get('mailer')->send($message);
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
                     'Notificación enviada.');
         } catch (\Exception $e) {
-             $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+             $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                     'No se pudo enviar el mail.');
         }
-        
+
     }
 }

@@ -1,0 +1,128 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+    <link type="text/css" rel="stylesheet"
+        href="{{ asset('css/datepicker3.css') }}" />
+
+{% endblock %}
+
+    {% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript"
+        src="{{ asset('js/bootstrap-datepicker.js') }}">
+    </script>
+
+    <script type="text/javascript"
+        src="{{ asset('js/locales/bootstrap-datepicker.es.js') }}">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+                $('.fechapicker').datepicker({
+                    format: "dd/mm/yyyy",
+                    todayBtn: true,
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true
+                });
+        });
+    </script>
+
+{% endblock %}
+
+{% block contenido %}
+
+<div class="row">
+    <div class="col-md-3">
+      <h3 class="titulo col-md-offset-3 lead">Estadísticas de productos</h3>
+    </div>
+    <div class="col-md-3 col-md-offset-5">
+        <p><a href="{{ path('default') }}" class="btn btn-default"><< Volver</a></p>
+    </div>
+</div>
+
+<form action="{{ path('productos_estadisticas') }}" method="post" {{ form_enctype(form) }} id="form" role="form">
+
+    <div class="row">
+        <div class="form-group col-md-3 col-md-offset-1">
+          <label class="required">Fecha Desde</label>
+            <div class="input-group col-md-12">
+                {% if app.request.method == 'POST' %}
+                    {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% else %}
+                    {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker', 'value': 'now'|date('d/m/Y')} }) }}
+                {% endif %}
+            </div>
+            <div class="text-danger">
+                {{ form_errors(form.fechaDesde) }}
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="required">Fecha Hasta</label>
+            <div class="input-group col-md-12">
+                {% if app.request.method == 'POST' %}
+                    {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% else %}
+                    {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker', 'value': 'now'|date('d/m/Y')} }) }}
+                {% endif %}
+            </div>
+            <div class="text-danger">
+                {{ form_errors(form.fechaHasta) }}
+            </div>
+        </div>
+        <div class="col-md-3" style="margin-top: 38px;">
+            <button type="submit" class="btn btn-success">Buscar</button>
+        </div>
+    </div>
+
+    {{ form_rest(form) }}
+</form>
+
+<hr>
+{% if app.request.method == 'POST' %}
+  <h3>Entre el {{ desde|date('d/m/Y') }} y el {{ hasta|date('d/m/Y') }} se han cargado {{ cant }} productos</h3>
+  <br>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="table-responsive">
+            <table data-toggle="table" data-classes="table table-striped" data-sort-name="fechafin" data-pagination="true" data-search="true" data-search-align="left" data-page-size=5>
+                <thead>
+                    <tr>
+                        <th data-align="center" data-sortable="true">Título</th>
+                        <th data-field="fechafin" data-align="center" data-sortable="true">Fecha de finalización</th>
+                        <th data-align="center" data-sortable="true">Categoría</th>
+                        <th data-align="center"> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.titulo }}</td>
+                        <td>{{ producto.fechafin|date('d/m/Y') }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>
+                            <a class="ver" href="{{ path('producto_show', { 'id': producto.id }) }}">
+                                <i class="glyphicon glyphicon-eye-open"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="danger">
+                        <td colspan="6">
+                            No hay datos para mostrar.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+{% else %}
+  <h3>Seleccione un período de fechas</h3>
+{% endif %}
+
+{% endblock %}

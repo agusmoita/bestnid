@@ -22,14 +22,39 @@
         <link href="{{ asset('css/opensans.css') }}" rel="stylesheet">
 
         <link href="{{ asset('css/bootstrap-table.css') }}" rel="stylesheet">
-        
+
         <!--[if lt IE 8]>
             <link href="/css/bootstrap-ie7.css" rel="stylesheet">
         <![endif]-->
 {% endblock %}
-        
+
     </head>
     <body>
+        {# modal de eliminar perfil #}
+            {% if app.user %}
+                <div class="modal fade" id="modalConfirmarEliminarPerfil" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Eliminación de Perfil</h4>
+                            </div>
+                            <div class="modal-body bg-danger">
+                                <p class="text-justify">
+                                ¿Está seguro de esto?.</p>
+                                <p class="text-justify"><strong>Esta acción no tiene vuelta atrás</strong></p>
+                            </div>
+                            <div class="modal-footer bg-danger" style="margin-top:0;">
+                                <div class="col-md-6 col-md-offset-6" style="margin-top: 30px;">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <a href="{{ path('eliminar_perfil', {'id': app.user.id }) }}" class="btn btn-danger">Realizar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {# fin modal #}
         {% block modals %}{% endblock %}
         {# MENU #}
             <nav class="navbar navbar-inverse navbar-fixed-top small">
@@ -49,72 +74,39 @@
                         <ul class="nav navbar-nav navbar-inverse">
                             {#<li><a class="navbar-brand"><i class="glyphicon glyphicon-shopping-cart"></i> Bestnid</a></li>#}
                             <li><a class="navbar-brand"><img src="{{ asset('images/logo-bn-menu.png') }}" class="img-rounded"> Bestnid</a></li>
-                            <li class="active"><a href="{{ path('default') }}"><i class="glyphicon glyphicon-home"></i></a></li> 
-                            {# {% if not app.user %}
-                                <li><a href="{{ path('nosotros') }}">Sobre nosotros</a></li>
-                                <li><a href="{{ path('servicios_estatico') }}">Servicios</a></li>
-                                <li><a href="{{ path('clientes') }}">Clientes</a></li>
-                                <li><a href="{{ path('articulo') }}">Artículos</a></li>
-                                <li><a href="{{ path('links') }}">Links</a></li>
-                                <li><a href="{{ path('contacto') }}">Contacto</a></li>
-                            {% endif %}#}
+                            <li class="active"><a href="{{ path('default') }}"><i class="glyphicon glyphicon-home"></i></a></li>
                             {% if app.user %}
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mis Productos<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Productos<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('usuario_prods', {'id': app.user.id}) }}">Mis Producto</a></li>
+                                        <li class="divider"></li>
                                         <li><a href="{{ path('producto_new') }}">Nuevo Producto</a></li>
                                     </ul>
                                 </li>
-                               {#<li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Servicios<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Listado de Servicios</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Nuevo Servicio</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{ path('usuario_ofertas', {'id': app.user.id}) }}">Mis Ofertas</a></li>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Clientes<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categorias<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Listado de Clientes</a></li>
+                                        <li><a href="{{ path('categoria') }}">Ver Categorías</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">Nuevo Cliente</a></li>
+                                        <li><a href="{{ path('categoria_new') }}">Nueva Categoría</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Medios<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('tipomedio') }}">Listado de Medios</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('tipomedio_new') }}">Nuevo Medio</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('pedido') }}">Listado de Pedidos</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('pedido_new') }}">Nuevo Pedido</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('equipo') }}">Listado de Equipos</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('equipo_new') }}">Nuevo Equipo</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Artículos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path('articulo') }}">Listado de Artículos</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="{{ path('articulo_new') }}">Nuevo Artículo</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="{{ path('carpeta') }}">Archivos</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('usuario') }}">Usuarios</a>
-                                </li> #}
+                            {% else %}
+                                <li><a href="{{ path('categoria') }}">Categorías</a></li>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                              <li class="dropdown">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Estadísticas<span class="caret"></span></a>
+                                  <ul class="dropdown-menu" role="menu">
+                                      <li><a href="{{ path('usuarios_estadisticas') }}">Usuarios</a></li>
+                                      <li class="divider"></li>
+                                      <li><a href="{{ path('productos_estadisticas') }}">Productos</a></li>
+                                  </ul>
+                              </li>
                             {% endif %}
                         </ul>
                     {# fin menu #}
@@ -122,14 +114,22 @@
                         <ul class="nav navbar-nav navbar-right navbar-inverse">
                             <li class="dropdown">
                                 {% if app.user %}
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">                            
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <span><i class="glyphicon glyphicon-cloud "></i>
                                         {{ app.user.username }}<i class="caret "></i></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a id="salirSesion" href="{{ path("usuario_logout") }}" class="btn btn-danger cerrar-sesion">Salir</a>
-                                        </li>
+                                      <li>
+                                        <a href="{{ path('usuario_edit', {'id': app.user.id}) }}" class="btn btn-default cerrar-sesion">Editar perfil</a>
+                                      </li>
+                                      <li class="divider"></li>
+                                      <li>
+                                        <a href="#" onclick="eliminarPerfil();return false;" class="btn btn-default cerrar-sesion">Eliminar perfil</a>
+                                      </li>
+                                      <li class="divider"></li>
+                                      <li>
+                                          <a id="salirSesion" href="{{ path("usuario_logout") }}" class="btn btn-danger cerrar-sesion">Salir</a>
+                                      </li>
                                     </ul>
                                 {% else %}
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -207,7 +207,7 @@
                 </div>
             </footer>
         {# FIN FOOTER #}
-                
+
     {% block javascripts %}
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -215,13 +215,18 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
         <!-- Bootstrap core JavaScript -->
         <!-- Librería jQuery requerida por los plugins de JavaScript -->
         <script src="{{ asset('js/jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>>
         <script src="{{ asset('js/bootstrap-table.js') }}"></script>
         <script src="{{ asset('js/locales/bootstrap-table-es-AR.js') }}"></script>
+        <script type="text/javascript">
+        function eliminarPerfil(){
+            $('#modalConfirmarEliminarPerfil').modal('show');
+        };
+        </script>
 
     {% endblock %}
     </body>

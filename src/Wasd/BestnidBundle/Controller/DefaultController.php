@@ -25,7 +25,10 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('WasdBestnidBundle:Producto')->findAll();
+        $f = new \DateTime();
+        $fecha = $f->format('Y-m-d');
+
+        $entities = $em->getRepository('WasdBestnidBundle:Producto')->buscarVigentes($fecha);
 
         $deleteForm = $this->createDeleteForm(-1);
 
@@ -34,6 +37,65 @@ class DefaultController extends Controller
             'entities' => $entities,
             'delete_form' => $deleteForm->createView(),
         );
+    }
+
+    /**
+     * Lists all Categoria entities.
+     *
+     * @Route("/categorias", name="categoria")
+     * @Method("GET")
+     * @Template("WasdBestnidBundle:Categoria:index.html.twig")
+     */
+    public function indexCategoriasAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('WasdBestnidBundle:Categoria')->findAll();
+
+        $deleteForm = $this->createDeleteCatForm(-1);
+
+        return array(
+            'entities' => $entities,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Finds and displays a Categoria entity.
+     *
+     * @Route("/categoria/{id}", name="categoria_show")
+     * @Method("GET")
+     * @Template("WasdBestnidBundle:Default:index.html.twig")
+     */
+    public function showCategoriaAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('WasdBestnidBundle:Producto')->buscarPorCategoria($id);
+
+        $deleteForm = $this->createDeleteForm(-1);
+
+        return array(
+            'entities'      => $entities,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Creates a form to delete a Categoria entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteCatForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('categoria_delete', array('id' => $id)))
+            ->setMethod('POST')
+            ->add('submit', 'submit', array('label' => 'Realizar'))
+            ->getForm()
+        ;
     }
 
     /**
@@ -115,13 +177,13 @@ class DefaultController extends Controller
     {
         $peticion =  $this->getRequest();
         $sesion = $peticion->getSession();
-        
+
         if ($peticion->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $peticion->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
             $error = $sesion->get(SecurityContext::AUTHENTICATION_ERROR);
         }
-        
+
         return array(
             'last_username' => $sesion->get(SecurityContext::LAST_USERNAME),
             'error' => $error

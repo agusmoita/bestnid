@@ -13,10 +13,34 @@ use Wasd\BestnidBundle\Form\OfertaType;
 /**
  * Oferta controller.
  *
- * @Route("/oferta")
+ * @Route("/intranet/oferta")
  */
 class OfertaController extends Controller
 {
+
+  /**
+   * @Route("/mios/{id}", name="usuario_ofertas")
+   * @Template("WasdBestnidBundle:Oferta:index.html.twig")
+   */
+  public function usuarioListAction($id)
+  {
+      $em = $this->getDoctrine()->getManager();
+
+      if ($this->getUser()->getId() != $id){
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                'No puedes ver las ofertas de otro usuario.');
+        return $this->redirect($this->generateUrl('default'));
+      }
+
+      $entities = $em->getRepository('WasdBestnidBundle:Oferta')->buscarPorUsuario($id);
+
+      $deleteForm = $this->createDeleteForm(-1);
+
+      return array(
+          'entities' => $entities,
+          'delete_form' => $deleteForm->createView(),
+      );
+  }
 
     /**
      * Creates a new Oferta entity.
@@ -41,16 +65,16 @@ class OfertaController extends Controller
             $validUser = $em->getRepository('WasdBestnidBundle:Oferta')->findUsuarioRepetido($producto, $usuario);
 
             if ($validUser){
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                         'Ya has realizado una oferta por este producto.');
                 return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));
             }
 
             $hoy = new \DateTime();
             if ($producto->getFechaFin() < $hoy){
-                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error', 
+                $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
                         'No se pueden realizar más ofertas.');
-                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));            
+                return $this->redirect($this->generateUrl('producto_show', array('id'=>$producto->getId())));
             }
 
             $entity->setFecha(new \DateTime());
@@ -60,7 +84,7 @@ class OfertaController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito', 
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
                     'Oferta realizada con éxito.');
             return $this->redirect($this->generateUrl('producto_show', array('id' => $session->get('id_producto'))));
         }
@@ -129,13 +153,18 @@ class OfertaController extends Controller
             throw $this->createNotFoundException('Unable to find Oferta entity.');
         }
 
+        $producto = $entity->getProducto();
+        if ($producto->getOfertaGanadora() == $entity){
+          $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                  'No puedes modificar esta oferta.');
+          return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
+        }
+
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -150,10 +179,10 @@ class OfertaController extends Controller
     {
         $form = $this->createForm(new OfertaType(), $entity, array(
             'action' => $this->generateUrl('oferta_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Guardar'));
 
         return $form;
     }
@@ -161,7 +190,7 @@ class OfertaController extends Controller
      * Edits an existing Oferta entity.
      *
      * @Route("/{id}", name="oferta_update")
-     * @Method("PUT")
+     * @Method("POST")
      * @Template("WasdBestnidBundle:Oferta:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -174,20 +203,20 @@ class OfertaController extends Controller
             throw $this->createNotFoundException('Unable to find Oferta entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('oferta_edit', array('id' => $id)));
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                  'Oferta modificada con éxito.');
+            return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
     /**
@@ -209,11 +238,19 @@ class OfertaController extends Controller
                 throw $this->createNotFoundException('Unable to find Oferta entity.');
             }
 
+            $producto = $entity->getProducto();
+            if ($producto->getOfertaGanadora() == $entity){
+              $this->getRequest()->getSession()->getFlashBag()->add('aviso_error',
+                      'No puedes eliminar esta oferta.');
+              return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
+            }
+
             $em->remove($entity);
             $em->flush();
         }
-
-        return $this->redirect($this->generateUrl('oferta'));
+        $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                'Oferta eliminada con éxito.');
+        return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
     }
 
     /**
@@ -228,7 +265,7 @@ class OfertaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('oferta_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Realizar'))
             ->getForm()
         ;
     }

@@ -12,6 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoriaRepository extends EntityRepository
 {
-	//consultas
-	 
+	public function findAll(){
+    $em = $this->getEntityManager();
+    $consulta = $em->createQuery('
+      SELECT c FROM WasdBestnidBundle:Categoria c
+      ORDER BY c.nombre'
+      );
+
+    return $consulta->getResult();
+  }
+
 }

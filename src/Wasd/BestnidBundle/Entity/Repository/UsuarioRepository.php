@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class UsuarioRepository extends EntityRepository
 {
+  public function cantFechas($desde, $hasta){
+    $em = $this->getEntityManager();
+    $consulta = $em->createQuery('
+      SELECT u FROM WasdBestnidBundle:Usuario u
+      WHERE u.fecha_alta >= :desde
+      AND u.fecha_alta <= :hasta
+      AND u.status = 1'
+      );
+    $consulta->setParameter('desde', $desde);
+    $consulta->setParameter('hasta', $hasta);
+
+    return $consulta->getResult();
+  }
+
 }
