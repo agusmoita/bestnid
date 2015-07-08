@@ -50,7 +50,11 @@
         <div class="form-group col-md-3 col-md-offset-1">
           <label class="required">Fecha Desde</label>
             <div class="input-group col-md-12">
-                {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% if app.request.method == 'POST' %}
+                    {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% else %}
+                    {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker', 'value': 'now'|date('d/m/Y')} }) }}
+                {% endif %}
             </div>
             <div class="text-danger">
                 {{ form_errors(form.fechaDesde) }}
@@ -59,7 +63,11 @@
         <div class="form-group col-md-3">
           <label class="required">Fecha Hasta</label>
             <div class="input-group col-md-12">
-                {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% if app.request.method == 'POST' %}
+                    {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% else %}
+                    {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker', 'value': 'now'|date('d/m/Y')} }) }}
+                {% endif %}
             </div>
             <div class="text-danger">
                 {{ form_errors(form.fechaHasta) }}
@@ -75,7 +83,40 @@
 
 <hr>
 {% if app.request.method == 'POST' %}
-  <h3>Entre el {{ desde|date('d/m/Y') }} y el {{ hasta|date('d/m/Y') }} se han registrado {{ usuarios }} usuarios</h3>
+  <h3>Entre el {{ desde|date('d/m/Y') }} y el {{ hasta|date('d/m/Y') }} se han registrado {{ cant }} usuarios</h3>
+  <br>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="table-responsive">
+            <table data-toggle="table" data-classes="table table-striped" data-pagination="true" data-search="true" data-search-align="left" data-page-size=5>
+                <thead>
+                    <tr>
+                        <th data-align="center" data-sortable="true">UserName</th>
+                        <th data-field="fechafin" data-sortable="true">Nombre</th>
+                        <th data-align="center" data-sortable="true">Email</th>
+                        <th data-align="center" data-sortable="true">Fecha de Alta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.apellido }}, {{ usuario.nombre }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.fechaalta|date('d/m/Y') }}</td>
+                    </tr>
+                {% else %}
+                    <tr class="danger">
+                        <td colspan="6">
+                            No hay datos para mostrar.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
 {% else %}
   <h3>Seleccione un período de fechas</h3>
 {% endif %}

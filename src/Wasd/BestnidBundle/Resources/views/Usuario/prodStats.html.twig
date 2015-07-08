@@ -50,7 +50,11 @@
         <div class="form-group col-md-3 col-md-offset-1">
           <label class="required">Fecha Desde</label>
             <div class="input-group col-md-12">
-                {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% if app.request.method == 'POST' %}
+                    {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% else %}
+                    {{ form_widget(form.fechaDesde, { 'attr': {'class': 'form-control fechapicker', 'value': 'now'|date('d/m/Y')} }) }}
+                {% endif %}
             </div>
             <div class="text-danger">
                 {{ form_errors(form.fechaDesde) }}
@@ -59,7 +63,11 @@
         <div class="form-group col-md-3">
           <label class="required">Fecha Hasta</label>
             <div class="input-group col-md-12">
-                {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% if app.request.method == 'POST' %}
+                    {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker'} }) }}
+                {% else %}
+                    {{ form_widget(form.fechaHasta, { 'attr': {'class': 'form-control fechapicker', 'value': 'now'|date('d/m/Y')} }) }}
+                {% endif %}
             </div>
             <div class="text-danger">
                 {{ form_errors(form.fechaHasta) }}
@@ -75,7 +83,44 @@
 
 <hr>
 {% if app.request.method == 'POST' %}
-  <h3>Entre el {{ desde|date('d/m/Y') }} y el {{ hasta|date('d/m/Y') }} se han cargado {{ productos }} productos</h3>
+  <h3>Entre el {{ desde|date('d/m/Y') }} y el {{ hasta|date('d/m/Y') }} se han cargado {{ cant }} productos</h3>
+  <br>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="table-responsive">
+            <table data-toggle="table" data-classes="table table-striped" data-sort-name="fechafin" data-pagination="true" data-search="true" data-search-align="left" data-page-size=5>
+                <thead>
+                    <tr>
+                        <th data-align="center" data-sortable="true">Título</th>
+                        <th data-field="fechafin" data-align="center" data-sortable="true">Fecha de finalización</th>
+                        <th data-align="center" data-sortable="true">Categoría</th>
+                        <th data-align="center"> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.titulo }}</td>
+                        <td>{{ producto.fechafin|date('d/m/Y') }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>
+                            <a class="ver" href="{{ path('producto_show', { 'id': producto.id }) }}">
+                                <i class="glyphicon glyphicon-eye-open"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="danger">
+                        <td colspan="6">
+                            No hay datos para mostrar.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
 {% else %}
   <h3>Seleccione un período de fechas</h3>
 {% endif %}

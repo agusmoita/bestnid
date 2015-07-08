@@ -179,7 +179,7 @@ class OfertaController extends Controller
     {
         $form = $this->createForm(new OfertaType(), $entity, array(
             'action' => $this->generateUrl('oferta_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'POST',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Guardar'));
@@ -190,7 +190,7 @@ class OfertaController extends Controller
      * Edits an existing Oferta entity.
      *
      * @Route("/{id}", name="oferta_update")
-     * @Method("PUT")
+     * @Method("POST")
      * @Template("WasdBestnidBundle:Oferta:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -209,7 +209,9 @@ class OfertaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('oferta_edit', array('id' => $id)));
+            $this->getRequest()->getSession()->getFlashBag()->add('aviso_exito',
+                  'Oferta modificada con éxito.');
+            return $this->redirect($this->generateUrl('usuario_ofertas', array('id' => $this->getUser()->getId())));
         }
 
         return array(

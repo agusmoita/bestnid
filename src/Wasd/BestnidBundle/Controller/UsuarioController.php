@@ -291,11 +291,13 @@ class UsuarioController extends Controller
                 $hasta = $h->format('Y-m-d');
               }
               $usuarios = $em->getRepository('WasdBestnidBundle:Usuario')->cantFechas($desde, $hasta);
+              $cant = count($usuarios);
               return array(
                 'form' => $formulario->createView(),
                 'desde' => $d,
                 'hasta' => $h,
-                'usuarios' => $usuarios
+                'usuarios' => $usuarios,
+                'cant' => $cant
               );
             }
           }
@@ -345,11 +347,13 @@ class UsuarioController extends Controller
                 $hasta = $h->format('Y-m-d');
               }
               $productos = $em->getRepository('WasdBestnidBundle:Producto')->cantFechas($desde, $hasta);
+              $cant = count($productos);
               return array(
                 'form' => $formulario->createView(),
                 'desde' => $d,
                 'hasta' => $h,
-                'productos' => $productos
+                'productos' => $productos,
+                'cant' => $cant
               );
             }
           }

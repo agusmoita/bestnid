@@ -48,13 +48,13 @@ class ProductoRepository extends EntityRepository
   public function cantFechas($desde, $hasta){
     $em = $this->getEntityManager();
     $consulta = $em->createQuery('
-      SELECT COUNT(p.id) FROM WasdBestnidBundle:Producto p
+      SELECT p FROM WasdBestnidBundle:Producto p
       WHERE p.fechaAlta >= :desde
       AND p.fechaAlta <= :hasta'
       );
     $consulta->setParameter('desde', $desde);
     $consulta->setParameter('hasta', $hasta);
 
-    return $consulta->getSingleScalarResult();
+    return $consulta->getResult();
   }
 }
